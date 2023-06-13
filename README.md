@@ -2,4 +2,4 @@
 
 Ai application for students (WORK IN PROGRESS..)
 
-![Landing Page Preview](https://i.imgur.com/VoZVRPP.png)
+https://github.com/springerjanek/studify/assets/54078220/4582e1b6-1dd4-4611-add2-fdee7f88da9f
