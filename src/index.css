@@ -1,11 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 
 :root {
+  background-color: black;
+  color: white;
   font-family: "Raleway", sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: white;
-  background-color: black;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
 }
 
 .container {
@@ -18,17 +21,64 @@
 }
 
 .section {
-  margin-top: 30px;
   display: flex;
   align-items: center;
-  gap: 200px;
+  align-content: center;
+  gap: 250px;
   font-size: 22px;
+  min-height: 100vh;
+}
+
+.section:nth-child(1) {
+  margin-top: -100px;
 }
 
 .float {
   width: fit-content;
   transform: translatey(0px);
   animation: float 2.5s ease-in-out infinite;
+}
+
+.hidden {
+  opacity: 0;
+  filter: blur(5px);
+  transform: translateX(-100%);
+  transition: all 1s;
+}
+
+.photos-slide > .section {
+  gap: 100px;
+}
+
+.photos-slide > .section > img {
+  width: 200px;
+  opacity: 1;
+  filter: blur(0);
+  transform: translateX(0);
+}
+
+.photos-slide > .section > img:nth-child(2) {
+  transition-delay: 200ms;
+}
+
+.photos-slide > .section > img:nth-child(3) {
+  transition-delay: 400ms;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  border: 1.5px solid #7e7e7e;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #f1f1f1;
+  border: 2px solid #616161;
+  border-radius: 8px;
 }
 
 @keyframes float {
