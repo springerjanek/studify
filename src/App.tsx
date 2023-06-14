@@ -1,4 +1,4 @@
-import { AnimateIn } from "./feature/Animate/AnimateIn";
+import { AnimateIn } from "@features/Animate";
 import Lottie from "lottie-react";
 import boyAnimation from "@assets/boy-studying.json";
 import girlAnimation from "@assets/girl-studying.json";
