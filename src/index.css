@@ -46,25 +46,6 @@
   transition: all 1s;
 }
 
-.photos-slide > .section {
-  gap: 100px;
-}
-
-.photos-slide > .section > img {
-  width: 200px;
-  opacity: 1;
-  filter: blur(0);
-  transform: translateX(0);
-}
-
-.photos-slide > .section > img:nth-child(2) {
-  transition-delay: 200ms;
-}
-
-.photos-slide > .section > img:nth-child(3) {
-  transition-delay: 400ms;
-}
-
 ::-webkit-scrollbar {
   width: 12px;
 }
