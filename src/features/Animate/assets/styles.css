@@ -1,18 +1,18 @@
-.photos-slide > .section {
+.photos-slide > div {
   gap: 100px;
 }
 
-.photos-slide > .section > img {
+.photos-slide > div > img {
   width: 200px;
   opacity: 1;
   filter: blur(0);
   transform: translateX(0);
 }
 
-.photos-slide > .section > img:nth-child(2) {
+.photos-slide > div > img:nth-child(2) {
   transition-delay: 200ms;
 }
 
-.photos-slide > .section > img:nth-child(3) {
+.photos-slide > div > img:nth-child(3) {
   transition-delay: 400ms;
 }
