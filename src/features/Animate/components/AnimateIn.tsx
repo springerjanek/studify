@@ -1,5 +1,6 @@
 import { useRef, ReactNode } from "react";
 import { useElementOnScreen } from "../hooks/useElementOnScreen";
+import "../assets/styles.css";
 
 export const AnimateIn = ({
   children,
