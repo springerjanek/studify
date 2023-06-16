@@ -1,1 +1,1 @@
-export { AnimateIn } from "./components/AnimateIn";
+export * from "./public-api";
