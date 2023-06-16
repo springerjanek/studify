@@ -1,14 +1,14 @@
 import { Container } from "@components/shared/ui/Container/Container";
 import { Section } from "@components/shared/ui/Section";
 import { AnimateIn } from "@features/Animate";
-import { Layout } from "./layouts/DefaultLayout";
+import { DefaultLayout } from "./layouts";
 import Lottie from "lottie-react";
 import boyAnimation from "@assets/boy-studying.json";
 import girlAnimation from "@assets/girl-studying.json";
 
-function App() {
+export const App = () => {
   return (
-    <Layout>
+    <DefaultLayout>
       <Container>
         <h1 className="float">STUDIFY</h1>
         <p style={{ fontSize: "18px" }}>
@@ -67,8 +67,6 @@ function App() {
           </Section>
         </AnimateIn>
       </Container>
-    </Layout>
+    </DefaultLayout>
   );
-}
-
-export default App;
+};
