@@ -1,6 +1,6 @@
-import { Container } from "@components/shared/ui/Container/Container";
-import { Section } from "@components/shared/ui/Section";
-import { AnimateIn } from "@features/Animate";
+import { Container } from "./shared/ui/Container";
+import { Section } from "./shared/ui/Section";
+import { AnimateIn } from "./features/Animate";
 import { DefaultLayout } from "./layouts";
 import Lottie from "lottie-react";
 import boyAnimation from "@assets/boy-studying.json";

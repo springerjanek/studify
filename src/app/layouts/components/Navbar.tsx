@@ -1,4 +1,4 @@
-import { StyledLink } from "@components/shared/ui/Link";
+import { StyledLink } from "../../shared/ui/Link";
 import { NavbarContainer } from "./Navbar.styled";
 
 export const Navbar = () => {
