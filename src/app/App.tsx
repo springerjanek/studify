@@ -5,24 +5,26 @@ import { DefaultLayout } from "./layouts";
 import Lottie from "lottie-react";
 import boyAnimation from "@assets/boy-studying.json";
 import girlAnimation from "@assets/girl-studying.json";
+import { Heading } from "@shared/ui/Heading";
 
 export const App = () => {
   return (
     <DefaultLayout>
       <Container>
-        <h1 className="float">STUDIFY</h1>
-        <p style={{ fontSize: "18px" }}>
+        <Heading bold={true} className="float">
+          STUDIFY
+        </Heading>
+        <p style={{ fontSize: "18px", textAlign: "center" }}>
           Make your homework easy and pleasure.
         </p>
         <AnimateIn>
           <Section>
             <p>
-              Revolutionize your homework management with Studify, <br /> the
-              AI-powered organizer. Say goodbye to chaos and hello <br /> to
-              effortless organization. From tracking assignments to <br />{" "}
-              setting reminders, Studify keeps you on top of your game. <br />
-              Join thousands of students experiencing the future of <br />
-              homework management with Studify.
+              Revolutionize your homework management with Studify, the
+              AI-powered organizer. Say goodbye to chaos and hello to effortless
+              organization. From tracking assignments to setting reminders,
+              Studify keeps you on top of your game. Join thousands of students
+              experiencing the future of homework management with Studify.
             </p>
             <Lottie animationData={boyAnimation} />
           </Section>
@@ -32,12 +34,11 @@ export const App = () => {
           <Section>
             <Lottie animationData={girlAnimation} />
             <p>
-              Revolutionize your homework management with Studify, <br /> the
-              AI-powered organizer. Say goodbye to chaos and hello <br /> to
-              effortless organization. From tracking assignments to <br />{" "}
-              setting reminders, Studify keeps you on top of your game. <br />
-              Join thousands of students experiencing the future of <br />
-              homework management with Studify.
+              Revolutionize your homework management with Studify, the
+              AI-powered organizer. Say goodbye to chaos and hello to effortless
+              organization. From tracking assignments to setting reminders,
+              Studify keeps you on top of your game. Join thousands of students
+              experiencing the future of homework management with Studify.
             </p>
           </Section>
         </AnimateIn>
@@ -45,12 +46,11 @@ export const App = () => {
         <AnimateIn photos={true}>
           <Section>
             <p>
-              Revolutionize your homework management with Studify, <br /> the
-              AI-powered organizer. Say goodbye to chaos and hello <br /> to
-              effortless organization. From tracking assignments to <br />{" "}
-              setting reminders, Studify keeps you on top of your game. <br />
-              Join thousands of students experiencing the future of <br />
-              homework management with Studify.
+              Revolutionize your homework management with Studify, the
+              AI-powered organizer. Say goodbye to chaos and hello to effortless
+              organization. From tracking assignments to setting reminders,
+              Studify keeps you on top of your game. Join thousands of students
+              experiencing the future of homework management with Studify.
             </p>
             <img
               className="hidden"
