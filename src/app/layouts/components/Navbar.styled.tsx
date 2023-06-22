@@ -4,13 +4,18 @@ export const NavbarContainer = styled.nav`
   display: flex;
   justify-content: right;
   gap: 20px;
-  padding: 10px 25px;
 
   @media only screen and (min-width: 300px) {
     a {
       display: none;
     }
     padding: 0;
+  }
+  @media only screen and (min-width: 769px) {
+    a {
+      display: block;
+    }
+    padding: 10px 25px;
   }
 `;
 
