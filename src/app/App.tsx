@@ -1,10 +1,11 @@
-import { Container } from "./shared/ui/Container";
-import { Section } from "./shared/ui/Section";
-import { AnimateIn } from "./features/Animate";
-import { DefaultLayout } from "./layouts";
 import Lottie from "lottie-react";
 import boyAnimation from "@assets/boy-studying.json";
 import girlAnimation from "@assets/girl-studying.json";
+import { DefaultLayout } from "./layouts";
+import { Container } from "./shared/ui/Container";
+import { Section } from "./shared/ui/Section";
+import { ImageContainer } from "./shared/ui/Section";
+import { AnimateIn } from "./features/Animate";
 import { Heading } from "@shared/ui/Heading";
 
 export const App = () => {
@@ -43,7 +44,7 @@ export const App = () => {
           </Section>
         </AnimateIn>
 
-        <AnimateIn photos={true}>
+        <AnimateIn>
           <Section>
             <p>
               Revolutionize your homework management with Studify, the
@@ -52,18 +53,20 @@ export const App = () => {
               Studify keeps you on top of your game. Join thousands of students
               experiencing the future of homework management with Studify.
             </p>
-            <img
-              className="hidden"
-              src="https://cdn-icons-png.flaticon.com/512/4297/4297861.png"
-            />
-            <img
-              className="hidden"
-              src="https://cdn-icons-png.flaticon.com/512/10371/10371428.png"
-            />
-            <img
-              className="hidden"
-              src="https://cdn-icons-png.flaticon.com/512/404/404672.png"
-            />
+            <ImageContainer>
+              <img
+                className="hidden"
+                src="https://cdn-icons-png.flaticon.com/512/4297/4297861.png"
+              />
+              <img
+                className="hidden"
+                src="https://cdn-icons-png.flaticon.com/512/10371/10371428.png"
+              />
+              <img
+                className="hidden"
+                src="https://cdn-icons-png.flaticon.com/512/404/404672.png"
+              />
+            </ImageContainer>
           </Section>
         </AnimateIn>
       </Container>
