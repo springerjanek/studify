@@ -1,3 +1,4 @@
 import { Section } from "./Section";
+import { ImageContainer } from "./ImageContainer";
 
-export { Section };
+export { Section, ImageContainer };

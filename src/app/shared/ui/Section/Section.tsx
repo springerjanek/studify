@@ -18,23 +18,19 @@ export const Section = styled.div`
 
   @media only screen and (min-width: 768px) {
     flex-direction: row;
-    gap: 50px;
+    gap: 40px;
     p {
       width: 50%;
     }
-    /* &:nth-child(3) {
+    &:nth-child(1) {
       margin-top: -100px;
-    } */
+    }
   }
 
   @media only screen and (min-width: 1000px) {
-    flex-direction: row;
     p {
       font-size: 22px;
       width: 40%;
-    }
-    &:nth-child(1) {
-      margin-top: -100px;
     }
   }
 `;
