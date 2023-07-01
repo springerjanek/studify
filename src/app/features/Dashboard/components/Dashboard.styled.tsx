@@ -5,8 +5,22 @@ export const Container = styled.main`
   display: flex;
   justify-content: space-between;
   padding-bottom: 20px;
-  margin-left: 150px;
-  margin-right: 150px;
+  @media only screen and (min-width: 300px) {
+    flex-flow: column-reverse;
+    align-items: center;
+    gap: 50px;
+    margin: 0px;
+    padding: 20px;
+    padding-top: 20px;
+  }
+  @media only screen and (min-width: 768px) {
+    flex-direction: row;
+    align-items: baseline;
+  }
+  @media only screen and (min-width: 1200px) {
+    margin-left: 150px;
+    margin-right: 150px;
+  }
 `;
 
 export const AssignmentsContainer = styled.div`
@@ -16,6 +30,19 @@ export const AssignmentsContainer = styled.div`
   button {
     width: 50%;
     align-self: center;
+  }
+
+  @media only screen and (min-width: 300px) {
+    width: 100%;
+  }
+  @media only screen and (min-width: 768px) {
+    width: 50%;
+  }
+  @media only screen and (min-width: 1200px) {
+    width: 40%;
+  }
+  @media only screen and (min-width: 1440px) {
+    width: 30%;
   }
 `;
 
