@@ -1,88 +1,81 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useGetDueAssignmentsDays } from "../hooks/useGetDueAssignmentDays";
+import { useGetUserAssignments } from "../hooks/useGetUserAssignments";
 import { useAuth } from "@shared/utils/auth";
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "../../../supabase";
-import {
-  AssignmentsContainer,
-  AssignmentsWrapper,
-  StyledDateCalendar,
-} from "./Dashboard.styled";
+import { AddAssignmentModal } from "./AddAssignmentModal";
+import { HighlightedCalendarDay } from "./HighlightedCalendarDay";
+import { AssignmentsContainer, AssignmentsWrapper } from "./Dashboard.styled";
 import { Container } from "./Dashboard.styled";
 import { Button } from "@shared/ui/Button/Button";
-import { AddAssignmentModal } from "./AddAssignmentModal";
-import { LocalizationProvider } from "@mui/x-date-pickers";
+import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs, { Dayjs } from "dayjs";
 
-type Assignment = {
+export type Assignment = {
   id: number;
   name: string;
-  dueDate: Date;
+  dueDate: string;
 };
 
 export const Dashboard = () => {
   const [showAssignmentModal, setShowAssignmentModal] = useState(false);
-  const [assignments, setAssignments] = useState<Assignment[]>([]);
-  const { session, currentUser } = useAuth();
+  const [value, setValue] = useState<Dayjs | null>(dayjs(new Date()));
 
-  // move this to react query
+  const { currentUser } = useAuth();
 
-  const getUserAssignments = async () => {
-    const { data: user_assignments, error } = await supabase
-      .from("assignments")
-      .select("*")
-      .eq("user_id", currentUser?.id);
+  const { data: assignments } = useGetUserAssignments(currentUser!.id);
 
-    if (error) {
-      throw error;
-    }
-    setAssignments(user_assignments);
-  };
-
-  useEffect(() => {
-    if (currentUser) {
-      getUserAssignments();
-    }
-  }, [currentUser]);
+  const highlightedDays = assignments && useGetDueAssignmentsDays(assignments);
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
   };
 
-  if (!session) {
-    return <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />;
-  } else {
-    return (
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <h1>Logged in!</h1>
-        <button onClick={handleLogout}>LOG OUT</button>
+  return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <h1>Logged in!</h1>
+      <Button onClick={handleLogout}>Log Out</Button>
 
-        <Container>
-          <AssignmentsContainer>
-            <AssignmentsWrapper>
-              {assignments &&
-                assignments.map((assignment) => {
-                  return (
-                    <div key={assignment.id}>
-                      <p>{assignment.name}</p>
-                      <p>{assignment.dueDate.toString()}</p>
-                    </div>
-                  );
-                })}
-            </AssignmentsWrapper>
-            <Button onClick={() => setShowAssignmentModal(true)}>
-              Add Assignment
-            </Button>
-          </AssignmentsContainer>
+      <Container>
+        <AssignmentsContainer>
+          <AssignmentsWrapper>
+            {assignments &&
+              assignments.map((assignment) => {
+                return (
+                  <div key={assignment.id}>
+                    <p>{assignment.name}</p>
+                    <p>{assignment.dueDate}</p>
+                  </div>
+                );
+              })}
+          </AssignmentsWrapper>
+          <Button onClick={() => setShowAssignmentModal(true)}>
+            Add Assignment
+          </Button>
+        </AssignmentsContainer>
 
-          {showAssignmentModal && <AddAssignmentModal />}
-
-          <StyledDateCalendar
-            sx={{ width: "400px", margin: "0" }}
-            views={["day"]}
-          />
-        </Container>
-      </LocalizationProvider>
-    );
-  }
+        {showAssignmentModal && (
+          <AddAssignmentModal showModal={setShowAssignmentModal} />
+        )}
+        <DateCalendar
+          sx={{
+            width: { xs: "100%", sm: "400px" },
+            margin: "0",
+            backgroundColor: "white",
+            color: "black",
+          }}
+          views={["day"]}
+          value={value}
+          onChange={(newValue) => setValue(newValue)}
+          slots={{ day: HighlightedCalendarDay }}
+          slotProps={{
+            day: {
+              highlightedDays,
+            } as any,
+          }}
+        />
+      </Container>
+    </LocalizationProvider>
+  );
 };
