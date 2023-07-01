@@ -12,7 +12,7 @@ export const Home = () => {
   return (
     <DefaultLayout>
       <Container>
-        <Heading bold={true} className="float">
+        <Heading $bold={true} className="float">
           STUDIFY
         </Heading>
         <p style={{ fontSize: "18px", textAlign: "center" }}>
