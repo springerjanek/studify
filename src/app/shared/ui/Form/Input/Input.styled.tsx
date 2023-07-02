@@ -7,8 +7,11 @@ export const StyledInput = styled.input<{ $width: string | undefined }>`
   padding: 12px;
   font-size: 15px;
   font-family: "Raleway", sans-serif;
-  background-color: white;
-  color: black;
+  background-color: #6f48eb;
+  color: white;
+  &::placeholder {
+    color: white;
+  }
   &:focus {
     outline: 0;
   }
