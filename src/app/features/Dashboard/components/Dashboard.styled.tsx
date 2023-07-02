@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { DateCalendar } from "@mui/x-date-pickers";
+import "react-calendar/dist/Calendar.css";
 
 export const Container = styled.main`
   display: flex;
@@ -57,13 +57,6 @@ export const AssignmentsWrapper = styled.div`
   p {
     padding: 10px 15px;
   }
-`;
-
-export const StyledDateCalendar = styled(DateCalendar)`
-  height: 310px;
-  background-color: white;
-  color: black;
-  border-radius: 10px;
 `;
 
 export const ButtonsContainer = styled.div`

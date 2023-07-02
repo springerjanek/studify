@@ -1,11 +1,10 @@
 import { Assignment } from "../components/Dashboard";
-import dayjs from "dayjs";
 
 export const useGetDueAssignmentsDays = (assignments: Assignment[]) => {
   let dueAssignmentsDays: number[] = [];
   assignments.map((assignment) => {
-    const day = dayjs(assignment.dueDate).date();
-    dueAssignmentsDays.push(day);
+    const dayFromDueDate = assignment.dueDate.split("-")[2];
+    dueAssignmentsDays.push(Number(dayFromDueDate));
   });
   return dueAssignmentsDays;
 };

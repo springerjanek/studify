@@ -2,15 +2,13 @@ import { useState } from "react";
 import { useGetDueAssignmentsDays } from "../hooks/useGetDueAssignmentDays";
 import { useGetUserAssignments } from "../hooks/useGetUserAssignments";
 import { useAuth } from "@shared/utils/auth";
-import { supabase } from "../../../supabase";
-import { AddAssignmentModal } from "./AddAssignmentModal";
-import { HighlightedCalendarDay } from "./HighlightedCalendarDay";
+import { AddAssignmentModal } from "./modals/AddAssignmentModal";
+import { CalendarDayModal } from "./modals/CalendarDayModal";
 import { AssignmentsContainer, AssignmentsWrapper } from "./Dashboard.styled";
 import { Container } from "./Dashboard.styled";
 import { Button } from "@shared/ui/Button/Button";
-import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs, { Dayjs } from "dayjs";
+import { supabase } from "../../../supabase";
+import Calendar from "react-calendar";
 
 export type Assignment = {
   id: number;
@@ -20,7 +18,8 @@ export type Assignment = {
 
 export const Dashboard = () => {
   const [showAssignmentModal, setShowAssignmentModal] = useState(false);
-  const [value, setValue] = useState<Dayjs | null>(dayjs(new Date()));
+  const [showCalendarDayModal, setShowCalendarDayModal] = useState(false);
+  const [dataToDayModal, setDataToDayModal] = useState({ date: new Date() });
 
   const { currentUser } = useAuth();
 
@@ -32,8 +31,15 @@ export const Dashboard = () => {
     const { error } = await supabase.auth.signOut();
   };
 
+  const handleClickDay = (clickedDay: Date) => {
+    const clickedDayIsHighlighted =
+      highlightedDays && highlightedDays.includes(clickedDay.getDate());
+    setDataToDayModal({ date: clickedDay });
+    setShowCalendarDayModal(true);
+  };
+
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <>
       <h1>Logged in!</h1>
       <Button onClick={handleLogout}>Log Out</Button>
 
@@ -58,24 +64,25 @@ export const Dashboard = () => {
         {showAssignmentModal && (
           <AddAssignmentModal showModal={setShowAssignmentModal} />
         )}
-        <DateCalendar
-          sx={{
-            width: { xs: "100%", sm: "400px" },
-            margin: "0",
-            backgroundColor: "white",
-            color: "black",
-          }}
-          views={["day"]}
-          value={value}
-          onChange={(newValue) => setValue(newValue)}
-          slots={{ day: HighlightedCalendarDay }}
-          slotProps={{
-            day: {
-              highlightedDays,
-            } as any,
-          }}
+
+        {showCalendarDayModal && (
+          <CalendarDayModal
+            showModal={setShowCalendarDayModal}
+            data={dataToDayModal}
+          />
+        )}
+        <Calendar
+          onClickDay={(value) => handleClickDay(value)}
+          showNeighboringMonth={false}
+          tileContent={({ date }) =>
+            highlightedDays && highlightedDays.includes(date.getDate())
+              ? "💡"
+              : null
+          }
+          view="month"
+          locale="en-EN"
         />
       </Container>
-    </LocalizationProvider>
+    </>
   );
 };
