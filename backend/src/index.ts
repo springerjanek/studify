@@ -1,6 +1,7 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import { Configuration, OpenAIApi } from "openai";
+import { supabase } from "./supabase.ts";
 
 dotenv.config();
 
@@ -24,15 +25,25 @@ const openai = new OpenAIApi(configuration);
 
 app.post("/assign-work", async (req, res) => {
   try {
-    const { assignments, dueDates } = req.body;
+    const { user_id, assignments, dueDates } = req.body;
 
     const prompt = generatePrompt(assignments, dueDates);
 
     const workPlan = await generateWorkPlan(prompt);
 
-    // to do : send to user's db
+    if (workPlan) {
+      const { data, error: insertError } = await supabase
+        .from("schedules")
+        .insert({
+          user_id: user_id,
+          data: JSON.parse(workPlan),
+        });
+      if (insertError) {
+        throw insertError;
+      }
+    }
 
-    res.send(workPlan);
+    res.send("Successfully assigned work plan");
   } catch (error) {
     console.error("Error assigning work:", error);
     res.status(500).json({ error: "Failed to assign work" });
@@ -83,7 +94,7 @@ async function generateWorkPlan(prompt: any) {
 
   const response = await openai.createCompletion(parameters);
 
-  return response.data.choices[0];
+  return response.data.choices[0].text;
 }
 
 app.listen(3001, () => {
