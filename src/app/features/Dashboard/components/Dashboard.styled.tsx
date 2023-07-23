@@ -13,7 +13,8 @@ export const Container = styled.main`
     padding: 20px;
     padding-top: 20px;
   }
-  @media only screen and (min-width: 768px) {
+
+  @media only screen and (min-width: 1000px) {
     flex-direction: row;
     align-items: baseline;
   }
@@ -35,11 +36,16 @@ export const AssignmentsContainer = styled.div`
   @media only screen and (min-width: 300px) {
     width: 100%;
   }
+  @media only screen and (min-width: 450px) {
+    width: 70%;
+  }
   @media only screen and (min-width: 768px) {
     width: 50%;
+    height: 600px;
   }
   @media only screen and (min-width: 1200px) {
     width: 40%;
+    height: 650px;
   }
   @media only screen and (min-width: 1440px) {
     width: 30%;
@@ -54,12 +60,30 @@ export const AssignmentsWrapper = styled.div`
   color: black;
   border-radius: 10px;
   margin-bottom: 15px;
+  overflow-y: auto;
   p {
     padding: 10px 15px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    height: 600px;
+  }
+  @media only screen and (min-width: 1200px) {
+    height: 650px;
   }
 `;
 
 export const ButtonsContainer = styled.div`
   display: flex;
   margin-top: 20px;
+`;
+
+export const Test = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 1;
+  filter: alpha(opacity = 80);
 `;
