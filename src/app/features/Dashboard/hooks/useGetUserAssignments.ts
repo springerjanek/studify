@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "../../../supabase";
-import { Assignment } from "../components/Dashboard";
+import { Assignments } from "../components/Dashboard";
 
 export const useGetUserAssignments = (userId: string) => {
   const { isLoading, data } = useQuery({
@@ -15,7 +15,7 @@ export const useGetUserAssignments = (userId: string) => {
       if (error) {
         throw error;
       }
-      return user_assignments as Assignment[];
+      return user_assignments as Assignments;
     },
   });
 
