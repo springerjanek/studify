@@ -55,15 +55,15 @@ export const Home = () => {
             </p>
             <ImageContainer>
               <img
-                className="hidden"
+                className="hide-picture"
                 src="https://cdn-icons-png.flaticon.com/512/4297/4297861.png"
               />
               <img
-                className="hidden"
+                className="hide-picture"
                 src="https://cdn-icons-png.flaticon.com/512/10371/10371428.png"
               />
               <img
-                className="hidden"
+                className="hide-picture"
                 src="https://cdn-icons-png.flaticon.com/512/404/404672.png"
               />
             </ImageContainer>
