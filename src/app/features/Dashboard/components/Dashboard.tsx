@@ -1,53 +1,64 @@
 import { useState } from "react";
-import { useGetDueAssignmentsDays } from "../hooks/useGetDueAssignmentDays";
-import { useGetUserAssignments } from "../hooks/useGetUserAssignments";
+import { useGetUserAssignments } from "../data-access/getUserAssignments.query";
+import { useGetUserSchedule } from "../data-access/getUserSchedule.query";
 import { useAuth } from "@shared/utils/auth";
-import { AddAssignmentModal } from "./modals/AddAssignmentModal";
-import { CalendarDayModal } from "./modals/CalendarDayModal";
-import { AssignmentsContainer, AssignmentsWrapper } from "./Dashboard.styled";
+import { AddAssignmentModal } from "./modals/addAssignment/AddAssignmentModal";
+import { CalendarDayModal } from "./modals/calendarDay/CalendarDayModal";
+import { CalendarTile } from "./CalendarTile";
+import Calendar from "react-calendar";
+import {
+  AssignmentsContainer,
+  AssignmentsWrapper,
+} from "./Dashboard.styled";
 import { Container } from "./Dashboard.styled";
 import { Button } from "@shared/ui/Button/Button";
 import { supabase } from "../../../supabase";
-import Calendar from "react-calendar";
 
-export type Assignment = {
+type Assignment = {
   id: number;
   name: string;
   dueDate: string;
 };
 
+export type Assignments = Assignment[];
+
 export const Dashboard = () => {
   const [showAssignmentModal, setShowAssignmentModal] = useState(false);
   const [showCalendarDayModal, setShowCalendarDayModal] = useState(false);
-  const [dataToDayModal, setDataToDayModal] = useState({ date: new Date() });
+  const [dataToDayModal, setDataToDayModal] = useState({
+    date: new Date(),
+    userId: "",
+  });
 
   const { currentUser } = useAuth();
 
-  const { data: assignments } = useGetUserAssignments(currentUser!.id);
-
-  const highlightedDays = assignments && useGetDueAssignmentsDays(assignments);
+  const { data: user_assignments } = useGetUserAssignments(currentUser!.id);
+  const { data: user_schedule } = useGetUserSchedule(currentUser!.id);
 
   const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut();
+    await supabase.auth.signOut();
   };
 
+  const handleAddAssignment = () => {
+    setShowAssignmentModal(true);
+    setShowCalendarDayModal(false)
+  }
+
   const handleClickDay = (clickedDay: Date) => {
-    const clickedDayIsHighlighted =
-      highlightedDays && highlightedDays.includes(clickedDay.getDate());
-    setDataToDayModal({ date: clickedDay });
+    setDataToDayModal({ date: clickedDay, userId: currentUser!.id });
     setShowCalendarDayModal(true);
+    setShowAssignmentModal(false)
   };
 
   return (
-    <>
-      <h1>Logged in!</h1>
+    <div>
       <Button onClick={handleLogout}>Log Out</Button>
 
       <Container>
         <AssignmentsContainer>
           <AssignmentsWrapper>
-            {assignments &&
-              assignments.map((assignment) => {
+            {user_assignments &&
+              user_assignments.map((assignment) => {
                 return (
                   <div key={assignment.id}>
                     <p>{assignment.name}</p>
@@ -56,13 +67,15 @@ export const Dashboard = () => {
                 );
               })}
           </AssignmentsWrapper>
-          <Button onClick={() => setShowAssignmentModal(true)}>
+          <Button onClick={handleAddAssignment}>
             Add Assignment
           </Button>
         </AssignmentsContainer>
 
         {showAssignmentModal && (
-          <AddAssignmentModal showModal={setShowAssignmentModal} />
+          <AddAssignmentModal
+            showModal={setShowAssignmentModal}
+          />
         )}
 
         {showCalendarDayModal && (
@@ -71,18 +84,21 @@ export const Dashboard = () => {
             data={dataToDayModal}
           />
         )}
+
         <Calendar
           onClickDay={(value) => handleClickDay(value)}
           showNeighboringMonth={false}
-          tileContent={({ date }) =>
-            highlightedDays && highlightedDays.includes(date.getDate())
-              ? "💡"
-              : null
-          }
+          tileContent={({ date }) => (
+            <CalendarTile
+              date={date}
+              assignments={user_assignments}
+              schedule={user_schedule}
+            />
+          )}
           view="month"
           locale="en-EN"
         />
       </Container>
-    </>
+    </div>
   );
 };
