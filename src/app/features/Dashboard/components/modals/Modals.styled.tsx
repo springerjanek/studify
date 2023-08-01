@@ -53,3 +53,9 @@ export const TimeFrame = styled.div`
     margin: 0;
   }
 `;
+
+export const DraggableWrapper = styled.div`
+  background-color: #1e063b;
+  padding: 8px;
+  border-radius: 12px;
+`;
