@@ -1,7 +1,7 @@
-import { Assignments } from "./Dashboard";
-import { UserScheduleResponse } from "../data-access/getUserSchedule.query";
 import { useGetDueAssignmentsDates } from "../hooks/useGetDueAssignmentDates";
 import { useGetFormattedDate } from "../hooks/useGetFormattedDate";
+import { Assignments } from "./Dashboard";
+import { UserScheduleResponse } from "../data-access/getUserSchedule.query";
 
 export const CalendarTile = ({
   date,
@@ -13,7 +13,7 @@ export const CalendarTile = ({
   schedule: UserScheduleResponse | undefined;
 }) => {
   const { formattedDate } = useGetFormattedDate(date);
-
+  
   const dueAssigmentDates = assignments
     ? useGetDueAssignmentsDates(assignments)
     : [];
