@@ -2,14 +2,10 @@ import { useState } from "react";
 import { useGetUserAssignments } from "../data-access/getUserAssignments.query";
 import { useGetUserSchedule } from "../data-access/getUserSchedule.query";
 import { useAuth } from "@shared/utils/auth";
-import { AddAssignmentModal } from "./modals/addAssignment/AddAssignmentModal";
-import { CalendarDayModal } from "./modals/calendarDay/CalendarDayModal";
-import { CalendarTile } from "./CalendarTile";
 import Calendar from "react-calendar";
-import {
-  AssignmentsContainer,
-  AssignmentsWrapper,
-} from "./Dashboard.styled";
+import { CalendarDayModal } from "./calendar/modals/calendarDay/CalendarDayModal";
+import { CalendarTile } from "./calendar/CalendarTile";
+import { AssignmentsList } from "./assignments/AssignmentsList";
 import { Container } from "./Dashboard.styled";
 import { Button } from "@shared/ui/Button/Button";
 import { supabase } from "../../../supabase";
@@ -23,7 +19,6 @@ type Assignment = {
 export type Assignments = Assignment[];
 
 export const Dashboard = () => {
-  const [showAssignmentModal, setShowAssignmentModal] = useState(false);
   const [showCalendarDayModal, setShowCalendarDayModal] = useState(false);
   const [dataToDayModal, setDataToDayModal] = useState({
     date: new Date(),
@@ -39,44 +34,17 @@ export const Dashboard = () => {
     await supabase.auth.signOut();
   };
 
-  const handleAddAssignment = () => {
-    setShowAssignmentModal(true);
-    setShowCalendarDayModal(false)
-  }
-
   const handleClickDay = (clickedDay: Date) => {
     setDataToDayModal({ date: clickedDay, userId: currentUser!.id });
     setShowCalendarDayModal(true);
-    setShowAssignmentModal(false)
   };
 
   return (
     <div>
-      <Button onClick={handleLogout}>Log Out</Button>
+      <Button $primary onClick={handleLogout}>Log Out</Button>
 
       <Container>
-        <AssignmentsContainer>
-          <AssignmentsWrapper>
-            {user_assignments &&
-              user_assignments.map((assignment) => {
-                return (
-                  <div key={assignment.id}>
-                    <p>{assignment.name}</p>
-                    <p>{assignment.dueDate}</p>
-                  </div>
-                );
-              })}
-          </AssignmentsWrapper>
-          <Button onClick={handleAddAssignment}>
-            Add Assignment
-          </Button>
-        </AssignmentsContainer>
-
-        {showAssignmentModal && (
-          <AddAssignmentModal
-            showModal={setShowAssignmentModal}
-          />
-        )}
+     <AssignmentsList user_assignments={user_assignments}  />
 
         {showCalendarDayModal && (
           <CalendarDayModal
