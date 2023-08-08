@@ -16,74 +16,10 @@ export const Container = styled.main`
 
   @media only screen and (min-width: 1000px) {
     flex-direction: row;
-    align-items: baseline;
+    align-items: flex-start;
   }
   @media only screen and (min-width: 1200px) {
     margin-left: 150px;
     margin-right: 150px;
   }
-`;
-
-export const AssignmentsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 22%;
-  button {
-    width: 50%;
-    align-self: center;
-  }
-
-  @media only screen and (min-width: 300px) {
-    width: 100%;
-  }
-  @media only screen and (min-width: 450px) {
-    width: 70%;
-  }
-  @media only screen and (min-width: 768px) {
-    width: 50%;
-    height: 600px;
-  }
-  @media only screen and (min-width: 1200px) {
-    width: 40%;
-    height: 650px;
-  }
-  @media only screen and (min-width: 1440px) {
-    width: 30%;
-  }
-`;
-
-export const AssignmentsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 500px;
-  background-color: white;
-  color: black;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  overflow-y: auto;
-  p {
-    padding: 10px 15px;
-  }
-
-  @media only screen and (min-width: 768px) {
-    height: 600px;
-  }
-  @media only screen and (min-width: 1200px) {
-    height: 650px;
-  }
-`;
-
-export const ButtonsContainer = styled.div`
-  display: flex;
-  margin-top: 20px;
-`;
-
-export const Test = styled.div`
-  position: absolute;
-  width: 100%;
-  top: 0;
-  left: 0;
-  background: #000;
-  opacity: 1;
-  filter: alpha(opacity = 80);
 `;
