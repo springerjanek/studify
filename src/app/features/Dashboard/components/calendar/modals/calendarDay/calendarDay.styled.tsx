@@ -2,7 +2,6 @@ import { styled } from "styled-components";
 
 export const ModalContainer = styled.div`
   height: 500px;
-  width: 500px;
   text-align: center;
   border-radius: 15px;
   background-color: white;
