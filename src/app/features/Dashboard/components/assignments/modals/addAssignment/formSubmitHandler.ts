@@ -1,25 +1,24 @@
 import axios from "axios";
-import { useQueryClient } from "@tanstack/react-query";
-import { useAuth } from "@/app/shared/utils/auth";
-import { useToast } from "@/components/ui/use-toast";
-import { supabase } from "../../../../../supabase";
-import { AssignmentFormValues } from "../../forms/AddAssignmentForm";
+import { QueryClient } from "@tanstack/react-query";
+import { User } from "@supabase/supabase-js";
+import { supabase } from "../../../../../../supabase";
+import { AssignmentFormValues } from "../../../forms/AddAssignmentForm";
 
 export const handleFormSubmit = async ({
   data,
+  queryClient,
+  toast,
+  currentUser,
   setLoading,
-  showModal
+  showModal,
 }: {
   data: AssignmentFormValues;
+  queryClient: QueryClient;
+  toast: any;
+  currentUser: User | undefined;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  showModal: React.Dispatch<React.SetStateAction<boolean>>
+  showModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const queryClient = useQueryClient();
-
-  const { toast } = useToast();
-
-  const { currentUser } = useAuth();
-
   const year = data.dueDate.getFullYear();
   const month = data.dueDate.getMonth() + 1;
   const day = data.dueDate.getDate();

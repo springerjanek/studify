@@ -1,9 +1,9 @@
-import { useGetUserSchedule } from "../../../data-access/getUserSchedule.query";
-import { useGetFormattedDate } from "../../../hooks/useGetFormattedDate";
+import { useGetUserSchedule } from "../../../../data-access/getUserSchedule.query";
+import { useGetFormattedDate } from "../../../../hooks/useGetFormattedDate";
 import { DayTimeline } from "./DayTimeline";
-import { timeFrames } from "./timeFrames";
+import { timeFramesData } from "../../timeFramesData";
 import { Heading } from "@shared/ui/Heading";
-import { ModalContainer, HeadingContainer } from "../Modals.styled";
+import { ModalContainer, HeadingContainer } from "./calendarDay.styled";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -20,12 +20,14 @@ export const CalendarDayModal = ({
   const filteredAssignments =
     user_schedule?.user_schedule[0].data.assignments.filter((assignment) => {
       return assignment.dates.some((date) => {
-        const [datePart, timeFrame] = date.split(":");
+        const [datePart, timeFrame] = date.split(": ");
+        console.log(datePart, timeFrame)
         return (
-          datePart === formattedDate && timeFrames.includes(timeFrame.trim())
+          datePart === formattedDate && timeFramesData.includes(timeFrame)
         );
       });
     });
+
 
   return (
     <ModalContainer>
