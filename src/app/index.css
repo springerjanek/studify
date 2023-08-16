@@ -154,6 +154,18 @@ abbr[title] {
   color: white;
 }
 
+ @media only screen and (max-width: 450px) {
+    .react-calendar {
+      width: 300px;
+    } 
+  }
+
+ @media only screen and (max-width: 350px) {
+    .react-calendar {
+      width: 270px;
+    } 
+  }
+
 @keyframes float {
   0% {
     transform: translatey(15px);
