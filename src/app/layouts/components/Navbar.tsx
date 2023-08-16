@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "@shared/utils/auth";
-import { StyledLink } from "../../shared/ui/Link";
+import { StyledLink } from "@shared/ui/Link";
 import {
   HamburgerIconWrapper,
   HamburgerMenu,

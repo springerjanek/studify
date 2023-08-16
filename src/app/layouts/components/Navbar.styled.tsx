@@ -23,7 +23,7 @@ export const HamburgerIconWrapper = styled.div`
   display: none;
   @media only screen and (max-width: 768px) {
     display: block;
-    padding: 10px 15px;
+    padding: 10px 10px;
     z-index: 1001;
   }
 `;

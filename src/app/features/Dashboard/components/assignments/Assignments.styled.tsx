@@ -16,15 +16,24 @@ export const AssignmentsContainer = styled.div`
   }
 
   @media only screen and (min-width: 300px) {
-    width: 85%;
+    width: 65%;
+  }
+  @media only screen and (min-width: 650px) {
+    width: 55%;
   }
   @media only screen and (min-width: 768px) {
-    width: 50%;
+    width: 60%;
+  }
+  @media only screen and (min-width: 1000px) {
+    width: 45%;
   }
   @media only screen and (min-width: 1200px) {
     width: 40%;
   }
   @media only screen and (min-width: 1440px) {
+    width: 35%;
+  }
+  @media only screen and (min-width: 1600px) {
     width: 23%;
   }
 `;
