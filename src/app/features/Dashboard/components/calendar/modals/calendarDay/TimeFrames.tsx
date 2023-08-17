@@ -35,11 +35,8 @@ export const TimeFrames = ({
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
+                  className="flex align-center justify-center text-center w-full p-1"
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: "100%",
                     border: "1px solid black",
                   }}
                 >

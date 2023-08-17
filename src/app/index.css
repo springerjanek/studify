@@ -64,6 +64,11 @@ body {
   }
 }
 
+.blur > div > main> *:not(.not-blur) {
+   filter: blur(3px);
+   z-index: -1
+}
+
 .react-calendar {
   width: 400px;
   max-width: 100%;
