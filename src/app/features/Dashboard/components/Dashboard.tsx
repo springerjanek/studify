@@ -9,6 +9,8 @@ import { AssignmentsList } from "./assignments/AssignmentsList";
 import { Container } from "./Dashboard.styled";
 import { Button } from "@shared/ui/Button/Button";
 import { supabase } from "../../../supabase";
+import { DashboardLayout } from "@/app/layouts/DashboardLayout";
+import { ModalContainer } from "./calendar/modals/calendarDay/calendarDay.styled";
 
 type Assignment = {
   id: number;
@@ -30,43 +32,44 @@ export const Dashboard = () => {
   const { data: user_assignments } = useGetUserAssignments(currentUser!.id);
   const { data: user_schedule } = useGetUserSchedule(currentUser!.id);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-  };
-
+ 
   const handleClickDay = (clickedDay: Date) => {
     setDataToDayModal({ date: clickedDay, userId: currentUser!.id });
     setShowCalendarDayModal(true);
   };
 
   return (
-    <div>
-      <Button $primary onClick={handleLogout}>Log Out</Button>
+    <div className={`${showCalendarDayModal ? "blur" : ""}`}>
+      <DashboardLayout>
+        <Container>
+          <AssignmentsList user_assignments={user_assignments} />
 
-      <Container>
-     <AssignmentsList user_assignments={user_assignments}  />
-
-        {showCalendarDayModal && (
-          <CalendarDayModal
-            showModal={setShowCalendarDayModal}
-            data={dataToDayModal}
-          />
-        )}
-
-        <Calendar
-          onClickDay={(value) => handleClickDay(value)}
-          showNeighboringMonth={false}
-          tileContent={({ date }) => (
-            <CalendarTile
-              date={date}
-              assignments={user_assignments}
-              schedule={user_schedule}
-            />
+          {showCalendarDayModal && (
+            <ModalContainer
+              className={`${showCalendarDayModal ? "not-blur" : ""}`}
+            >
+              <CalendarDayModal
+                showModal={setShowCalendarDayModal}
+                data={dataToDayModal}
+              />
+            </ModalContainer>
           )}
-          view="month"
-          locale="en-EN"
-        />
-      </Container>
+
+          <Calendar
+            onClickDay={(value) => handleClickDay(value)}
+            showNeighboringMonth={false}
+            tileContent={({ date }) => (
+              <CalendarTile
+                date={date}
+                assignments={user_assignments}
+                schedule={user_schedule}
+              />
+            )}
+            view="month"
+            locale="en-EN"
+          />
+        </Container>
+      </DashboardLayout>
     </div>
   );
 };
