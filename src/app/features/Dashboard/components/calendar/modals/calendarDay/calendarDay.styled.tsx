@@ -1,7 +1,19 @@
 import { styled } from "styled-components";
 
 export const ModalContainer = styled.div`
-  height: 500px;
+  position: absolute;
+  padding-top: 40px;
+
+  @media only screen and (min-width: 769px) and (max-width: 999px) {
+    padding-top: 200px;
+  }
+`;
+
+export const ModalWrapper = styled.div`
+  height: 550px;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
   border-radius: 15px;
   background-color: white;
@@ -9,21 +21,14 @@ export const ModalContainer = styled.div`
   overflow-y: auto;
 
   @media only screen and (min-width: 300px) {
-    width: 100%;
+    width: 85%;
   }
   @media only screen and (min-width: 450px) {
-    width: 70%;
-  }
-  @media only screen and (min-width: 768px) {
-    width: 50%;
+    width: 100%;
     height: 600px;
   }
   @media only screen and (min-width: 1200px) {
-    width: 40%;
     height: 650px;
-  }
-  @media only screen and (min-width: 1440px) {
-    width: 30%;
   }
 `;
 
