@@ -13,19 +13,22 @@ export const AssignmentsList = ({
   user_assignments: Assignments | undefined;
 }) => {
   const [expandAssigments, setExpandAssignments] = useState(false);
-    const [showAddAssignment, setShowAddAssignment] = useState(false);
+  const [showAddAssignment, setShowAddAssignment] = useState(false);
 
   const handleAddAssignment = () => {
+    if (!expandAssigments) {
+      setShowAddAssignment(!showAddAssignment);
+      setExpandAssignments(!expandAssigments);
+    }
     setShowAddAssignment(!showAddAssignment);
-    setExpandAssignments(!expandAssigments)
   };
 
   const handleExpandLessAssignments = () => {
     setExpandAssignments(false);
-    setShowAddAssignment(false)
-  }
+    setShowAddAssignment(false);
+  };
 
-    return (
+  return (
     <AssignmentsContainer>
       <Button $primary onClick={handleAddAssignment}>
         Add Assignment
@@ -44,13 +47,17 @@ export const AssignmentsList = ({
         )}
       </div>
       {user_assignments && expandAssigments && (
-          <AssignmentsWrapper>
-            {user_assignments.map((assignment) => {
-              return (
-             <AssignmentCard key={assignment.id} name={assignment.name} dueDate={assignment.dueDate}/>
-              );
-            })}
-          </AssignmentsWrapper>
+        <AssignmentsWrapper>
+          {user_assignments.map((assignment) => {
+            return (
+              <AssignmentCard
+                key={assignment.id}
+                name={assignment.name}
+                dueDate={assignment.dueDate}
+              />
+            );
+          })}
+        </AssignmentsWrapper>
       )}
 
       {showAddAssignment && (
