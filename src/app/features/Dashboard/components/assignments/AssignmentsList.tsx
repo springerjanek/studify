@@ -16,11 +16,8 @@ export const AssignmentsList = ({
   const [showAddAssignment, setShowAddAssignment] = useState(false);
 
   const handleAddAssignment = () => {
-    if (!expandAssigments) {
       setShowAddAssignment(!showAddAssignment);
       setExpandAssignments(!expandAssigments);
-    }
-    setShowAddAssignment(!showAddAssignment);
   };
 
   const handleExpandLessAssignments = () => {

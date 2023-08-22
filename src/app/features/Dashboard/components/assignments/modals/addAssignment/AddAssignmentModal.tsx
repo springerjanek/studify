@@ -45,7 +45,7 @@ export const AddAssignmentModal = ({
           <CloseIcon sx={{ color: "black" }} />
         </IconButton>
       </HeadingContainer>
-      {loading && <h3>Proccessing your work plan...</h3>}
+      {loading && <h3 className="text-center">Proccessing your work plan...</h3>}
       <AddAssignmentForm onSubmit={onSubmit} />
     </ModalContainer>
   );

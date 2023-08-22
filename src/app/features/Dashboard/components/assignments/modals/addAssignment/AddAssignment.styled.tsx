@@ -2,7 +2,8 @@ import { styled } from "styled-components";
 
 export const ModalContainer = styled.div`
   height: 430px;
-    border-radius: 10px;
+  margin-top: 20px;
+  border-radius: 10px;
   background-color: white;
   color: black;
   overflow-y: auto;
@@ -10,5 +11,5 @@ export const ModalContainer = styled.div`
 
 export const HeadingContainer = styled.div`
   display: flex;
-    justify-content: center;
+  justify-content: center;
 `;
