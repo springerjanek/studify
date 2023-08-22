@@ -4,9 +4,8 @@ export const AssignmentsContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  width: 22%;
   height: fit-content;
-  gap: 40px;
+  width: 22%;
   padding: 25px;
   border-radius: 10px;
   background-color: #6140a6;
