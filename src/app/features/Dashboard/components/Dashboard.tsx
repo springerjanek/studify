@@ -7,8 +7,6 @@ import { CalendarDayModal } from "./calendar/modals/calendarDay/CalendarDayModal
 import { CalendarTile } from "./calendar/CalendarTile";
 import { AssignmentsList } from "./assignments/AssignmentsList";
 import { Container } from "./Dashboard.styled";
-import { Button } from "@shared/ui/Button/Button";
-import { supabase } from "../../../supabase";
 import { DashboardLayout } from "@/app/layouts/DashboardLayout";
 import { ModalContainer } from "./calendar/modals/calendarDay/calendarDay.styled";
 
@@ -31,7 +29,6 @@ export const Dashboard = () => {
 
   const { data: user_assignments } = useGetUserAssignments(currentUser!.id);
   const { data: user_schedule } = useGetUserSchedule(currentUser!.id);
-
  
   const handleClickDay = (clickedDay: Date) => {
     setDataToDayModal({ date: clickedDay, userId: currentUser!.id });
