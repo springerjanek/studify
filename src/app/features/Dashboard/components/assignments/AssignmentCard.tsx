@@ -28,7 +28,7 @@ export const AssignmentCard = ({
     AssignmentCardHandlers({ name });
 
   return (
-    <Card>
+    <Card className="mt-5">
       <CardContent className="grid p-5 pt-1">
         <div className="flex items-center justify-between space-x-4  font-['Montserrat']">
           <div>
