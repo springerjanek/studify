@@ -3,6 +3,7 @@ import { QueryClient } from "@tanstack/react-query";
 import { User } from "@supabase/supabase-js";
 import { supabase } from "../../../../../../supabase";
 import { AssignmentFormValues } from "../../../forms/AddAssignmentForm";
+import { UserScheduleResponse } from "@/app/features/Dashboard/data-access/getUserSchedule.query";
 
 export const handleFormSubmit = async ({
   data,
@@ -29,6 +30,9 @@ export const handleFormSubmit = async ({
     year,
   ].join(".");
 
+  const userScheduleData: UserScheduleResponse | undefined = queryClient.getQueryData(["user_schedule"])
+  const userSchedule = userScheduleData && userScheduleData.user_schedule
+
   setLoading(true);
 
   try {
@@ -42,8 +46,9 @@ export const handleFormSubmit = async ({
 
     await axios.post("http://localhost:3001/assign-work", {
       user_id: currentUser!.id,
-      assignment: data.assignmentName,
+      assignmentName: data.assignmentName,
       dueDate: formattedDate,
+      userSchedule: userSchedule
     });
 
     queryClient.invalidateQueries({ queryKey: ["user_schedule"] });
@@ -60,7 +65,7 @@ export const handleFormSubmit = async ({
     setLoading(false);
     toast({
       title: "Error during processing work plan",
-      className: "text-red",
+      className: "text-red-500",
     });
   }
 };
