@@ -1,7 +1,6 @@
 import { useGetUserSchedule } from "../../../../data-access/getUserSchedule.query";
 import { useGetFormattedDate } from "../../../../hooks/useGetFormattedDate";
 import { DayTimeline } from "./DayTimeline";
-import { timeFramesData } from "../../timeFramesData";
 import { Heading } from "@shared/ui/Heading";
 import { HeadingContainer, ModalWrapper } from "./calendarDay.styled";
 import { IconButton } from "@mui/material";
@@ -17,15 +16,7 @@ export const CalendarDayModal = ({
   const { data: user_schedule } = useGetUserSchedule(data.userId);
   const { formattedDate } = useGetFormattedDate(data.date);
 
-  const filteredAssignments =
-    user_schedule?.user_schedule[0].data.assignments.filter((assignment) => {
-      return assignment.dates.some((date) => {
-        const [datePart, timeFrame] = date.split(": ");
-        return (
-          datePart === formattedDate && timeFramesData.includes(timeFrame)
-        );
-      });
-    });
+  const assignments = user_schedule?.user_schedule[0].data.assignments
 
   return (
       <ModalWrapper>
@@ -44,7 +35,7 @@ export const CalendarDayModal = ({
         </HeadingContainer>
 
         <DayTimeline
-          filteredAssignments={filteredAssignments}
+          assignments={assignments}
           formattedDate={formattedDate}
           userId={data.userId}
           user_schedule={user_schedule?.user_schedule}
