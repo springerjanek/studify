@@ -6,12 +6,12 @@ import { DragDropContext} from "react-beautiful-dnd";
 import { TimeFrames } from "./TimeFrames";
 
 export const DayTimeline = ({
-  filteredAssignments,
+  assignments,
   formattedDate,
   userId,
   user_schedule,
 }: {
-  filteredAssignments: {
+  assignments: {
         name: string;
         dates: string[];
       }[] | undefined;
@@ -19,7 +19,7 @@ export const DayTimeline = ({
   userId: string;
   user_schedule: UserSchedule[] | undefined;
 }) => {
-  const [assignments, setAssignments] = useState(filteredAssignments);
+  const [userAssignments, setUserAssignments] = useState(assignments);
   const { mutate: updateUserSchedule } = useUpdateUserSchedule();
 
  const debouncedUpdate = useDebounce(() => {
@@ -34,8 +34,8 @@ export const DayTimeline = ({
     const today = formattedDate;
 
     const updatedAssignments =
-      assignments &&
-      assignments.map((assignment) => {
+      userAssignments &&
+      userAssignments.map((assignment) => {
         if (assignment.name === draggableId) {
           const desiredDate = assignment.dates.filter(
             (date) => date.split(":")[0] === today
@@ -53,7 +53,7 @@ export const DayTimeline = ({
         }
       });
 
-    setAssignments(updatedAssignments);
+    setUserAssignments(updatedAssignments);
     debouncedUpdate()
   };
 
