@@ -7,44 +7,46 @@ import { TimeFrames } from "./TimeFrames";
 
 export const DayTimeline = ({
   assignments,
-  formattedDate,
+  currentDayDate,
   userId,
   user_schedule,
 }: {
-  assignments: {
+  assignments:
+    | {
         name: string;
         dates: string[];
-      }[] | undefined;
-  formattedDate: string;
+      }[]
+    | undefined;
+  currentDayDate: string;
   userId: string;
   user_schedule: UserSchedule[] | undefined;
 }) => {
   const [userAssignments, setUserAssignments] = useState(assignments);
   const { mutate: updateUserSchedule } = useUpdateUserSchedule();
 
- const debouncedUpdate = useDebounce(() => {
+  const debouncedUpdate = useDebounce(() => {
     updateUserSchedule({ user_schedule, userId, assignments });
- })
+  });
 
   const onDropHandler = (result: any) => {
     const { source, destination, draggableId } = result;
 
     if (!destination || source.droppableId === destination.droppableId) return;
 
-    const today = formattedDate;
-
     const updatedAssignments =
       userAssignments &&
       userAssignments.map((assignment) => {
         if (assignment.name === draggableId) {
           const desiredDate = assignment.dates.filter(
-            (date) => date.split(":")[0] === today
+            (date) => date.split(":")[0] === currentDayDate
           )[0];
 
           const updatedTimeFrame = destination.droppableId;
 
           const updatedDates = assignment.dates.map((date) =>
-            date === desiredDate ? today + `: ${updatedTimeFrame}` : date
+            date === desiredDate
+              ? currentDayDate + `: ${updatedTimeFrame}`
+              : date
           );
 
           return { ...assignment, dates: updatedDates };
@@ -54,12 +56,12 @@ export const DayTimeline = ({
       });
 
     setUserAssignments(updatedAssignments);
-    debouncedUpdate()
+    debouncedUpdate();
   };
 
   return (
     <DragDropContext onDragEnd={(result) => onDropHandler(result)}>
-      <TimeFrames assignments={assignments} formattedDate={formattedDate}/>
+      <TimeFrames assignments={assignments} currentDayDate={currentDayDate} />
     </DragDropContext>
   );
 };
