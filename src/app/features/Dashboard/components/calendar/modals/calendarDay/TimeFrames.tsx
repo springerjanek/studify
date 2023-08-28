@@ -1,14 +1,15 @@
-import  {timeFramesData} from "../../timeFramesData"
+import { useFindBestTimeFrame } from "@/app/features/Dashboard/hooks/useFindBestTimeFrame";
+import { timeFramesData } from "../../timeFramesData";
 import {
   TimeFramesContainer,
   TimeFrame,
-  DraggableWrapper,
 } from "./calendarDay.styled";
-import { Draggable, Droppable } from "react-beautiful-dnd";
+import {  Droppable } from "react-beautiful-dnd";
+import { DraggableAssignment } from "./DraggableAssignment";
 
 export const TimeFrames = ({
   assignments,
-  formattedDate,
+  currentDayDate,
 }: {
   assignments:
     | {
@@ -16,16 +17,20 @@ export const TimeFrames = ({
         dates: string[];
       }[]
     | undefined;
-  formattedDate: string;
+  currentDayDate: string;
 }) => {
   return (
     <TimeFramesContainer>
       {timeFramesData.map((timeFrame, index) => {
-        const matchingAssignment =
+        const frameMatchingAssignments =
           assignments &&
-          assignments.find((assignment) =>
-            assignment.dates.includes(`${formattedDate}: ${timeFrame}`)
-          );
+          assignments.filter((assignment) => {
+            return assignment.dates.some((dateWithTimeFrame) => {
+              const [datePart] = dateWithTimeFrame.split(": ");
+              const bestTimeFrame = useFindBestTimeFrame(dateWithTimeFrame);
+              return bestTimeFrame === timeFrame && datePart === currentDayDate;
+            });
+          });
 
         return (
           <TimeFrame key={index}>
@@ -40,25 +45,7 @@ export const TimeFrames = ({
                     border: "1px solid black",
                   }}
                 >
-                  <Draggable
-                    key={matchingAssignment?.name}
-                    draggableId={matchingAssignment?.name || "empty"}
-                    index={0}
-                  >
-                    {(provided) => (
-                      <DraggableWrapper
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        style={{
-                          display: `${matchingAssignment ? "block" : "none"}`,
-                          ...provided.draggableProps.style,
-                        }}
-                      >
-                        <p>{matchingAssignment?.name}</p>
-                      </DraggableWrapper>
-                    )}
-                  </Draggable>
+                 <DraggableAssignment frameMatchingAssignments={frameMatchingAssignments} currentDayDate={currentDayDate} />
                   {provided.placeholder}
                 </div>
               )}
