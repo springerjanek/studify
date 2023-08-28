@@ -2,10 +2,10 @@ import { styled } from "styled-components";
 
 export const ModalContainer = styled.div`
   position: absolute;
-  padding-top: 40px;
+  top: 100px;
 
-  @media only screen and (min-width: 769px) and (max-width: 999px) {
-    padding-top: 200px;
+  @media only screen and (min-width: 769px)  {
+  top: 50px;
   }
 `;
 
@@ -24,10 +24,10 @@ export const ModalWrapper = styled.div`
     width: 85%;
   }
   @media only screen and (min-width: 450px) {
-    width: 100%;
     height: 600px;
   }
   @media only screen and (min-width: 1200px) {
+    width: 100%;
     height: 650px;
   }
 `;
