@@ -6,45 +6,47 @@ import { DragDropContext} from "react-beautiful-dnd";
 import { TimeFrames } from "./TimeFrames";
 
 export const DayTimeline = ({
-  filteredAssignments,
-  formattedDate,
+  assignments,
+  currentDayDate,
   userId,
   user_schedule,
 }: {
-  filteredAssignments: {
+  assignments:
+    | {
         name: string;
         dates: string[];
-      }[] | undefined;
-  formattedDate: string;
+      }[]
+    | undefined;
+  currentDayDate: string;
   userId: string;
   user_schedule: UserSchedule[] | undefined;
 }) => {
-  const [assignments, setAssignments] = useState(filteredAssignments);
+  const [userAssignments, setUserAssignments] = useState(assignments);
   const { mutate: updateUserSchedule } = useUpdateUserSchedule();
 
- const debouncedUpdate = useDebounce(() => {
+  const debouncedUpdate = useDebounce(() => {
     updateUserSchedule({ user_schedule, userId, assignments });
- })
+  });
 
   const onDropHandler = (result: any) => {
     const { source, destination, draggableId } = result;
 
     if (!destination || source.droppableId === destination.droppableId) return;
 
-    const today = formattedDate;
-
     const updatedAssignments =
-      assignments &&
-      assignments.map((assignment) => {
+      userAssignments &&
+      userAssignments.map((assignment) => {
         if (assignment.name === draggableId) {
           const desiredDate = assignment.dates.filter(
-            (date) => date.split(":")[0] === today
+            (date) => date.split(":")[0] === currentDayDate
           )[0];
 
           const updatedTimeFrame = destination.droppableId;
 
           const updatedDates = assignment.dates.map((date) =>
-            date === desiredDate ? today + `: ${updatedTimeFrame}` : date
+            date === desiredDate
+              ? currentDayDate + `: ${updatedTimeFrame}`
+              : date
           );
 
           return { ...assignment, dates: updatedDates };
@@ -53,13 +55,13 @@ export const DayTimeline = ({
         }
       });
 
-    setAssignments(updatedAssignments);
-    debouncedUpdate()
+    setUserAssignments(updatedAssignments);
+    debouncedUpdate();
   };
 
   return (
     <DragDropContext onDragEnd={(result) => onDropHandler(result)}>
-      <TimeFrames assignments={assignments} formattedDate={formattedDate}/>
+      <TimeFrames assignments={assignments} currentDayDate={currentDayDate} />
     </DragDropContext>
   );
 };
