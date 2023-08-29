@@ -30,41 +30,68 @@ export const handleFormSubmit = async ({
     year,
   ].join(".");
 
-  const userScheduleData: UserScheduleResponse | undefined = queryClient.getQueryData(["user_schedule"])
-  const userSchedule = userScheduleData && userScheduleData.user_schedule
+  const userScheduleData: UserScheduleResponse | undefined =
+    queryClient.getQueryData(["user_schedule"]);
+  const userSchedule = userScheduleData && userScheduleData.user_schedule;
 
   setLoading(true);
 
-  try {
-    await supabase.from("assignments").insert({
-      user_id: currentUser!.id,
-      name: data.assignmentName,
-      dueDate: formattedDate,
-    });
+  const { data: selectAssignment } = await supabase
+    .from("assignments")
+    .select("*")
+    .eq("name", data.assignmentName);
 
-    queryClient.invalidateQueries({ queryKey: ["user_assignments"] });
+  if (selectAssignment?.length === 0) {
+    try {
+      const { error: insertError } = await supabase.from("assignments").insert({
+        user_id: currentUser!.id,
+        name: data.assignmentName,
+        dueDate: formattedDate,
+      });
 
-    await axios.post("http://localhost:3001/assign-work", {
-      user_id: currentUser!.id,
-      assignmentName: data.assignmentName,
-      dueDate: formattedDate,
-      userSchedule: userSchedule
-    });
+      if (insertError) {
+        throw new Error("Error during inserting into DB");
+      }
 
-    queryClient.invalidateQueries({ queryKey: ["user_schedule"] });
+      queryClient.invalidateQueries({ queryKey: ["user_assignments"] });
 
-    setLoading(false);
-    showModal(false);
+      await axios.post("http://localhost:3001/assign-work", {
+        user_id: currentUser!.id,
+        assignmentName: data.assignmentName,
+        dueDate: formattedDate,
+        userSchedule: userSchedule,
+      });
 
+      queryClient.invalidateQueries({ queryKey: ["user_schedule"] });
+
+      setLoading(false);
+      showModal(false);
+
+      toast({
+        title: "Successfully assigned work plan",
+        description: "Check your calendar for more info",
+        className: "text-black",
+      });
+    } catch (error: unknown) {
+      setLoading(false);
+
+      if (axios.isAxiosError(error)) {
+        toast({
+          title: "Error during generating work plan",
+          className: "text-red-500",
+        });
+      } else {
+        console.error(error);
+        toast({
+          title: "Uknown Error",
+          className: "text-red-500",
+        });
+      }
+    }
+  } else {
+    setLoading(false)
     toast({
-      title: "Successfully assigned work plan",
-      description: "Check your calendar for more info",
-      className: "text-black",
-    });
-  } catch (error) {
-    setLoading(false);
-    toast({
-      title: "Error during processing work plan",
+      title: "This assignment already exists",
       className: "text-red-500",
     });
   }
