@@ -36,7 +36,7 @@ export const CalendarDayModal = ({
 
         <DayTimeline
           assignments={assignments}
-          formattedDate={formattedDate}
+          currentDayDate={formattedDate}
           userId={data.userId}
           user_schedule={user_schedule?.user_schedule}
         />
