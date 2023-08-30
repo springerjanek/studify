@@ -36,15 +36,12 @@ export const Dashboard = () => {
   };
 
   return (
-    <div className={`${showCalendarDayModal ? "blur" : ""}`}>
       <DashboardLayout>
         <Container>
           <AssignmentsList user_assignments={user_assignments} />
 
           {showCalendarDayModal && (
-            <ModalContainer
-              className={`${showCalendarDayModal ? "not-blur" : ""}`}
-            >
+            <ModalContainer>
               <CalendarDayModal
                 showModal={setShowCalendarDayModal}
                 data={dataToDayModal}
@@ -67,6 +64,5 @@ export const Dashboard = () => {
           />
         </Container>
       </DashboardLayout>
-    </div>
   );
 };
