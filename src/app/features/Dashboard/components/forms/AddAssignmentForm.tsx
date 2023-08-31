@@ -14,8 +14,10 @@ export type AssignmentFormValues = {
 
 export const AddAssignmentForm = ({
   onSubmit,
+  loading
 }: {
   onSubmit: (data: AssignmentFormValues) => void;
+  loading: boolean
 }) => {
   const {
     handleSubmit,
@@ -52,7 +54,7 @@ export const AddAssignmentForm = ({
         placeholder="Date"
         width="30%"
       />
-      <Button style={{ marginTop: "25px" }} type="submit">
+      <Button style={{ marginTop: "25px" }} type="submit" disabled={loading}>
         Submit
       </Button>
     </Form>
