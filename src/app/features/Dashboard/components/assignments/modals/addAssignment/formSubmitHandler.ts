@@ -1,7 +1,6 @@
 import axios from "axios";
 import { QueryClient } from "@tanstack/react-query";
 import { User } from "@supabase/supabase-js";
-import { supabase } from "../../../../../../supabase";
 import { AssignmentFormValues } from "../../../forms/AddAssignmentForm";
 import { UserScheduleResponse } from "@/app/features/Dashboard/data-access/getUserSchedule.query";
 
@@ -36,32 +35,15 @@ export const handleFormSubmit = async ({
 
   setLoading(true);
 
-  const { data: selectAssignment } = await supabase
-    .from("assignments")
-    .select("*")
-    .eq("name", data.assignmentName);
-
-  if (selectAssignment?.length === 0) {
     try {
-      const { error: insertError } = await supabase.from("assignments").insert({
-        user_id: currentUser!.id,
-        name: data.assignmentName,
-        dueDate: formattedDate,
-      });
-
-      if (insertError) {
-        throw new Error("Error during inserting into DB");
-      }
-
-      queryClient.invalidateQueries({ queryKey: ["user_assignments"] });
-
       await axios.post("http://localhost:3001/assign-work", {
         user_id: currentUser!.id,
         assignmentName: data.assignmentName,
         dueDate: formattedDate,
         userSchedule: userSchedule,
       });
-
+      
+      queryClient.invalidateQueries({ queryKey: ["user_assignments"] });
       queryClient.invalidateQueries({ queryKey: ["user_schedule"] });
 
       setLoading(false);
@@ -73,11 +55,9 @@ export const handleFormSubmit = async ({
         className: "text-black",
       });
     } catch (error: unknown) {
-      setLoading(false);
-
       if (axios.isAxiosError(error)) {
         toast({
-          title: "Error during generating work plan",
+          title: error.response ? error.response.data.error : "You can only add assignment and generate work plan per 10 seconds.",
           className: "text-red-500",
         });
       } else {
@@ -87,12 +67,6 @@ export const handleFormSubmit = async ({
           className: "text-red-500",
         });
       }
+        setLoading(false);
     }
-  } else {
-    setLoading(false)
-    toast({
-      title: "This assignment already exists",
-      className: "text-red-500",
-    });
-  }
 };
