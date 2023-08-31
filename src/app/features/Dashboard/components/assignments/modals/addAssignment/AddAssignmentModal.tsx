@@ -14,20 +14,39 @@ import { useAuth } from "@/app/shared/utils/auth";
 
 export const AddAssignmentModal = ({
   showModal,
-}: 
-{
+}: {
   showModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [loading, setLoading] = useState(false);
 
-    const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-    const { toast } = useToast();
+  const { toast } = useToast();
 
-    const { currentUser } = useAuth();
+  const { currentUser } = useAuth();
 
   const onSubmit = async (data: AssignmentFormValues) => {
-    await handleFormSubmit({data, queryClient, toast, currentUser, setLoading, showModal})
+
+    const passedDueDateIsToday =
+      data.dueDate.toDateString() === new Date().toDateString();
+    const passedDueDateIsInThePast =
+      new Date().getTime() - data.dueDate.getTime() > 0;
+
+    if (passedDueDateIsToday || passedDueDateIsInThePast) {
+      toast({
+        title: "Due date can not be due the past or today",
+        className: "text-red-500",
+      });
+    } else {
+      await handleFormSubmit({
+        data,
+        queryClient,
+        toast,
+        currentUser,
+        setLoading,
+        showModal,
+      });
+    }
   };
 
   return (
@@ -45,8 +64,10 @@ export const AddAssignmentModal = ({
           <CloseIcon sx={{ color: "black" }} />
         </IconButton>
       </HeadingContainer>
-      {loading && <h3 className="text-center">Proccessing your work plan...</h3>}
-      <AddAssignmentForm onSubmit={onSubmit} />
+      {loading && (
+        <h3 className="text-center">Proccessing your work plan...</h3>
+      )}
+      <AddAssignmentForm onSubmit={onSubmit} loading={loading} />
     </ModalContainer>
   );
 };
