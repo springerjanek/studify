@@ -13,4 +13,8 @@ export const Button = styled.button<{
   background-color: ${(props) => (props.$primary ? "white" : "#6f48eb")};
   color: ${(props) => (props.$primary ? "#6f48eb" : "white")};
   cursor: pointer;
+
+  &:disabled {
+    background-color: grey;
+  }
 `;
