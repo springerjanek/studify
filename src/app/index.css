@@ -42,6 +42,19 @@ body {
   transition: all 1s;
 }
 
+.backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
 ::-webkit-scrollbar {
   width: 12px;
 }
@@ -56,17 +69,6 @@ body {
   background-color: #f1f1f1;
   border: 2px solid #616161;
   border-radius: 8px;
-}
-
-@media only screen and (max-width: 1000px) {
-  ::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-.blur > div > main> *:not(.not-blur) {
-   filter: blur(3px);
-   z-index: -1
 }
 
 .react-calendar {
@@ -170,6 +172,12 @@ abbr[title] {
       width: 270px;
     } 
   }
+
+  @media only screen and (max-width: 1000px) {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
 
 @keyframes float {
   0% {
