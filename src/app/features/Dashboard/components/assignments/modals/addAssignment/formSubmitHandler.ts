@@ -3,6 +3,7 @@ import { QueryClient } from "@tanstack/react-query";
 import { User } from "@supabase/supabase-js";
 import { AssignmentFormValues } from "../../../forms/AddAssignmentForm";
 import { UserScheduleResponse } from "@/app/features/Dashboard/data-access/getUserSchedule.query";
+import { Assignments } from "../../../Dashboard";
 
 export const handleFormSubmit = async ({
   data,
@@ -33,7 +34,18 @@ export const handleFormSubmit = async ({
     queryClient.getQueryData(["user_schedule"]);
   const userSchedule = userScheduleData && userScheduleData.user_schedule;
 
+  const userAssignments: Assignments | undefined = queryClient.getQueryData(["user_assignments"])
+
   setLoading(true);
+
+  if (userAssignments && userAssignments.length > 4) {
+    setLoading(false)
+    return toast({
+      title:
+        "You can only have 5 assignments at a time on a free version",
+      className: "text-red-500",
+    });
+  }
 
     try {
       await axios.post("http://localhost:3001/assign-work", {
@@ -56,14 +68,21 @@ export const handleFormSubmit = async ({
       });
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        toast({
-          title: error.response ? error.response.data.error : "You can only add assignment and generate work plan per 10 seconds.",
-          className: "text-red-500",
-        });
+        if (error.response) {
+          toast({
+            title: error.response.data.error,
+            className: "text-red-500",
+          });
+        } else {
+          toast({
+            title: "Network error occurred. Backend may be down.",
+            className: "text-red-500",
+          });
+        }
       } else {
-        console.error(error);
         toast({
-          title: "Uknown Error",
+          title:
+            "You can only add assignment and generate a work plan per 10 seconds.",
           className: "text-red-500",
         });
       }
