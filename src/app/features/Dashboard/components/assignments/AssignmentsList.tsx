@@ -12,12 +12,12 @@ export const AssignmentsList = ({
 }: {
   user_assignments: Assignments | undefined;
 }) => {
-  const [expandAssigments, setExpandAssignments] = useState(false);
+  const [expandAssignments, setExpandAssignments] = useState(false);
   const [showAddAssignment, setShowAddAssignment] = useState(false);
 
   const handleAddAssignment = () => {
       setShowAddAssignment(!showAddAssignment);
-      setExpandAssignments(!expandAssigments);
+      setExpandAssignments(!expandAssignments);
   };
 
   const handleExpandLessAssignments = () => {
@@ -31,7 +31,7 @@ export const AssignmentsList = ({
         Add Assignment
       </Button>
       <div className="absolute right-2 top-5">
-        {!expandAssigments ? (
+        {!expandAssignments ? (
           <ExpandMoreIcon
             className="w-10 h-10"
             onClick={() => setExpandAssignments(true)}
@@ -43,18 +43,24 @@ export const AssignmentsList = ({
           />
         )}
       </div>
-      {user_assignments && expandAssigments && (
-        <AssignmentsWrapper>
-          {user_assignments.map((assignment) => {
-            return (
-              <AssignmentCard
-                key={assignment.id}
-                name={assignment.name}
-                dueDate={assignment.dueDate}
-              />
-            );
-          })}
-        </AssignmentsWrapper>
+      {expandAssignments && (
+        <>
+          {user_assignments && user_assignments.length > 0 && (
+            <AssignmentsWrapper>
+              {user_assignments.map((assignment) => (
+                <AssignmentCard
+                  key={assignment.id}
+                  name={assignment.name}
+                  dueDate={assignment.dueDate}
+                />
+              ))}
+            </AssignmentsWrapper>
+          )}
+
+          {user_assignments?.length === 0 && (
+            <h3>Add assignments to get started!</h3>
+          )}
+        </>
       )}
 
       {showAddAssignment && (
