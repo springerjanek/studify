@@ -4,8 +4,8 @@ export const ModalContainer = styled.div`
   position: absolute;
   top: 100px;
 
-  @media only screen and (min-width: 769px)  {
-  top: 50px;
+  @media only screen and (min-width: 769px) {
+    top: 50px;
   }
 `;
 
@@ -26,9 +26,15 @@ export const ModalWrapper = styled.div`
   @media only screen and (min-width: 450px) {
     height: 600px;
   }
+  @media only screen and (min-width: 768px) {
+    width: 50%;
+  }
   @media only screen and (min-width: 1200px) {
-    width: 100%;
     height: 650px;
+    width: 40%;
+  }
+  @media only screen and (min-width: 1440px) {
+    width: 35%;
   }
 `;
 

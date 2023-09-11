@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { StyledLink } from "@shared/ui/Link";
 import { HamburgerMenu, NavbarContainer } from "./DashboardNavbar.styled";
+import { DashboardTutorial } from "@/app/features/Dashboard/components/DashboardTutorial";
 import { HamburgerIconWrapper } from "./Navbar.styled";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsActiveOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import SupportAgentOutlinedIcon from "@mui/icons-material/SupportAgentOutlined";
 
-export const DashboardNavbar = () => {
+export const DashboardNavbar = ({
+  setShowCalendarDayModal
+}: {
+  setShowCalendarDayModal: (clickedDay: Date) => void
+}) => {
   const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
 
   return (
@@ -17,6 +22,8 @@ export const DashboardNavbar = () => {
           Studify
         </StyledLink>
 
+        <DashboardTutorial setShowCalendarDayModal={setShowCalendarDayModal}/>
+
         <StyledLink to="">
           <NotificationsActiveOutlinedIcon className="w-4 h-4" /> Notifications
         </StyledLink>
@@ -24,9 +31,9 @@ export const DashboardNavbar = () => {
         <StyledLink to="">
           <SettingsOutlinedIcon className="w-4 h-4" /> Settings
         </StyledLink>
-        
+
         <StyledLink to="">
-          <InfoOutlinedIcon className="w-4 h-4" /> Support
+          <SupportAgentOutlinedIcon className="w-4 h-4" /> Support
         </StyledLink>
 
         <HamburgerIconWrapper>

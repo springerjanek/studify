@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useGetUserAssignments } from "../data-access/getUserAssignments.query";
 import { useGetUserSchedule } from "../data-access/getUserSchedule.query";
-import { useAuth } from "@shared/utils/auth";
 import Calendar from "react-calendar";
+import { useAuth } from "@shared/utils/auth";
 import { CalendarDayModal } from "./calendar/modals/calendarDay/CalendarDayModal";
 import { CalendarTile } from "./calendar/CalendarTile";
 import { AssignmentsList } from "./assignments/AssignmentsList";
 import { Container } from "./Dashboard.styled";
-import { DashboardLayout } from "@/app/layouts/DashboardLayout";
 import { ModalContainer } from "./calendar/modals/calendarDay/calendarDay.styled";
+import { DashboardLayout } from "@/app/layouts/DashboardLayout";
 
 type Assignment = {
   id: number;
@@ -36,7 +36,7 @@ export const Dashboard = () => {
   };
 
   return (
-      <DashboardLayout>
+      <DashboardLayout setShowCalendarDayModal={handleClickDay}>
         <Container>
           <AssignmentsList user_assignments={user_assignments} />
 
