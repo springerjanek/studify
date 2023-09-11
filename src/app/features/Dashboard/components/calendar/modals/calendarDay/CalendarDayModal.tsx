@@ -19,7 +19,8 @@ export const CalendarDayModal = ({
   const assignments = user_schedule?.user_schedule[0].data.assignments
 
   return (
-      <ModalWrapper>
+    <div className="backdrop" onClick={() => showModal(false)}>
+      <ModalWrapper onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}>
         <HeadingContainer>
           <Heading>Your day: {data.date.toDateString()}</Heading>
           <IconButton
@@ -41,5 +42,6 @@ export const CalendarDayModal = ({
           user_schedule={user_schedule?.user_schedule}
         />
       </ModalWrapper>
+    </div>
   );
 };
