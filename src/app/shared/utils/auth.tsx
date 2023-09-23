@@ -39,6 +39,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 export const useAuth = () => {
   const session = useContext(AuthContext);
-  const currentUser = session?.user;
+
+  if (session === null) {
+    throw new Error(
+      "useAuth must be used within a AuthProvider"
+    );
+  }
+
+  const currentUser = session.user;
   return { session, currentUser };
 };
