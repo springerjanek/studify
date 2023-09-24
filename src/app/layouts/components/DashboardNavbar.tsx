@@ -8,11 +8,7 @@ import NotificationsActiveOutlinedIcon from "@mui/icons-material/NotificationsAc
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import SupportAgentOutlinedIcon from "@mui/icons-material/SupportAgentOutlined";
 
-export const DashboardNavbar = ({
-  setShowCalendarDayModal
-}: {
-  setShowCalendarDayModal: (clickedDay: Date) => void
-}) => {
+export const DashboardNavbar = () => {
   const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
 
   return (
@@ -22,7 +18,7 @@ export const DashboardNavbar = ({
           Studify
         </StyledLink>
 
-        <DashboardTutorial setShowCalendarDayModal={setShowCalendarDayModal}/>
+        <DashboardTutorial />
 
         <StyledLink to="">
           <NotificationsActiveOutlinedIcon className="w-4 h-4" /> Notifications
