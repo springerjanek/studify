@@ -16,7 +16,6 @@
 
     "paths": {
       "@/*": ["./src/*"],
-      "@hooks/*": ["./src/app/hooks/*"],
       "@features/*": ["./src/app/features/*"],
       "@shared/*": ["./src/app/shared/*"],
       "@assets/*": ["./src/assets/*"]
