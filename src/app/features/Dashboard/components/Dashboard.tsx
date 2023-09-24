@@ -1,14 +1,14 @@
-import { useState } from "react";
 import { useGetUserAssignments } from "../data-access/getUserAssignments.query";
 import { useGetUserSchedule } from "../data-access/getUserSchedule.query";
-import Calendar from "react-calendar";
 import { useAuth } from "@shared/utils/auth";
+import Calendar from "react-calendar";
 import { CalendarDayModal } from "./calendar/modals/calendarDay/CalendarDayModal";
 import { CalendarTile } from "./calendar/CalendarTile";
 import { AssignmentsList } from "./assignments/AssignmentsList";
 import { Container } from "./Dashboard.styled";
 import { ModalContainer } from "./calendar/modals/calendarDay/calendarDay.styled";
 import { DashboardLayout } from "@/app/layouts/DashboardLayout";
+import { useCalendarModal } from "@/app/shared/utils/calendarModal";
 
 type Assignment = {
   id: number;
@@ -19,24 +19,21 @@ type Assignment = {
 export type Assignments = Assignment[];
 
 export const Dashboard = () => {
-  const [showCalendarDayModal, setShowCalendarDayModal] = useState(false);
-  const [dataToDayModal, setDataToDayModal] = useState({
-    date: new Date(),
-    userId: "",
-  });
+
+    const {
+      showCalendarDayModal,
+      setShowCalendarDayModal,
+      dataToDayModal, 
+      handleOpenCalendarDayModal,
+    } = useCalendarModal();
 
   const { currentUser } = useAuth();
 
   const { data: user_assignments } = useGetUserAssignments(currentUser!.id);
   const { data: user_schedule } = useGetUserSchedule(currentUser!.id);
  
-  const handleClickDay = (clickedDay: Date) => {
-    setDataToDayModal({ date: clickedDay, userId: currentUser!.id });
-    setShowCalendarDayModal(true);
-  };
-
   return (
-      <DashboardLayout setShowCalendarDayModal={handleClickDay}>
+      <DashboardLayout>
         <Container>
           <AssignmentsList user_assignments={user_assignments} />
 
@@ -50,7 +47,7 @@ export const Dashboard = () => {
           )}
 
           <Calendar
-            onClickDay={(value) => handleClickDay(value)}
+            onClickDay={(value) => handleOpenCalendarDayModal({date: value, userId: currentUser.id})}
             showNeighboringMonth={false}
             tileContent={({ date }) => (
               <CalendarTile
