@@ -78,6 +78,8 @@ export const DashboardTutorial = () => {
         styles={{
           options: {
             zIndex: 10000,
+            primaryColor: "#a03055",
+            textColor: "#6f48eb",
           },
         }}
       />
