@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AssignmentCardHandlers } from "./AssignmentCardHandlers";
+import { AssignmentCardService } from "./AssignmentCardService";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Command,
@@ -25,7 +25,7 @@ export const AssignmentCard = ({
   const [open, setOpen] = useState(false);
 
   const { handleCompletedAssignment, handleDeleteAssignment } =
-    AssignmentCardHandlers({ name });
+    AssignmentCardService({ name });
 
   return (
     <Card className="mt-5">
