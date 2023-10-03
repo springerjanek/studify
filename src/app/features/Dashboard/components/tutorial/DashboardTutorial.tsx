@@ -5,6 +5,7 @@ import { useAuth } from "@/app/shared/utils/auth";
 import { useToast } from "@/components/ui/use-toast";
 import Joyride, { ACTIONS, CallBackProps, STATUS } from "react-joyride";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { TutorialHeading } from "../Dashboard.styled";
 
 export const DashboardTutorial = () => {
   const { showCalendarDayModal, handleOpenCalendarDayModal, setShowCalendarDayModal } =
@@ -83,12 +84,12 @@ export const DashboardTutorial = () => {
           },
         }}
       />
-      <h2
+      <TutorialHeading
         className="font-medium m-0 flex items-center gap-1 cursor-pointer"
         onClick={handleClickStart}
       >
         <InfoOutlinedIcon className="w-4 h-4" /> Tutorial
-      </h2>
+      </TutorialHeading>
     </div>
   );
 };
