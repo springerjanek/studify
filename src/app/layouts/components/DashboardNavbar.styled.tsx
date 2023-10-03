@@ -3,20 +3,14 @@ import { styled } from "styled-components";
 export const LayoutContainer = styled.div`
   display: flex;
   width: 100%;
-  
-  &::after {
-    flex: 1;
-    content: '';
-  }
 
   @media only screen and (max-width: 768px) {
-   flex-direction: column;
+    flex-direction: column;
   }
 `;
 
 export const NavbarContainer = styled.nav`
   display: flex;
-  flex: 1;
   flex-direction: column;
   justify-content: right;
   gap: 10px;
@@ -50,4 +44,9 @@ export const HamburgerMenu = styled.div`
   background-color: black;
   overflow: hidden;
   z-index: 1000;
+  a {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
 `;
