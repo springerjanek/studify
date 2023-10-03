@@ -28,3 +28,19 @@ export const Container = styled.main`
   }
 
 `;
+
+export const TutorialHeading = styled.h2`
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  font-weight: 500;
+  cursor: pointer;
+
+  @media only screen and (min-width: 300px) {
+    display: none
+  }
+  @media only screen and (min-width: 769px) {
+    display: flex;
+  }
+`;
