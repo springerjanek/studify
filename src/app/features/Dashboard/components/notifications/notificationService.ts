@@ -3,15 +3,14 @@ import { supabase } from "@/app/supabase";
 export const updateNotificationPreferences = async ({
   options,
   currentUserId,
-  toast
+  toast,
 }: {
   options: {
     noti_upcoming: boolean;
     noti_nextDay: boolean;
-  },
-  currentUserId: string,
-   toast: any
-
+  };
+  currentUserId: string;
+  toast: any;
 }) => {
   const { noti_upcoming, noti_nextDay } = options;
 
@@ -23,38 +22,22 @@ export const updateNotificationPreferences = async ({
     return;
   }
 
-  if (noti_upcoming) {
-    const { error } = await supabase
-      .from("users")
-      .update({
-        noti_upcoming: noti_upcoming,
-      })
-      .eq("user_id", currentUserId);
-
-    if (error) {
-      toast({
-        title: error.message,
-        className: "text-red-500",
-      });
-      return;
-    }
-  }
-
-  if (noti_nextDay) {
-    const { error } = await supabase
-      .from("users")
-      .update({
+  const { error } = await supabase
+    .from("users")
+    .update({
+      notifications: {
         noti_nextDay: noti_nextDay,
-      })
-      .eq("user_id", currentUserId);
+        noti_upcoming: noti_upcoming,
+      },
+    })
+    .eq("user_id", currentUserId);
 
-    if (error) {
-      toast({
-        title: error.message,
-        className: "text-red-500",
-      });
-      return;
-    }
+  if (error) {
+    toast({
+      title: error.message,
+      className: "text-red-500",
+    });
+    return;
   }
 
   toast({

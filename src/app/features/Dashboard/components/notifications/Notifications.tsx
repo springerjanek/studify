@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/app/shared/utils/auth";
 import { useToast } from "@/components/ui/use-toast";
 import { updateNotificationPreferences } from "./notificationService";
@@ -6,19 +6,46 @@ import { Switch } from "@/components/ui/switch";
 import { DashboardLayout } from "@/app/layouts/DashboardLayout";
 import { Heading } from "@/app/shared/ui/Heading";
 import { Button } from "@/app/shared/ui/Button";
-import { Container, Notification, NotificationsContainer, WhiteLine } from "./Notifications.styled";
-import "./utils.css"
+import {
+  Container,
+  Notification,
+  NotificationsContainer,
+  WhiteLine,
+} from "./Notifications.styled";
+import "./utils.css";
+import { useGetUserNotiPreferences } from "../../data-access/getUserNotiPreferences.query";
 
 export const Notifications = () => {
-    const [options,setOptions] = useState({noti_upcoming: false, noti_nextDay: false})
+  const [options, setOptions] = useState({
+    noti_upcoming: false,
+    noti_nextDay: false,
+  });
 
-   const { currentUser } = useAuth();
-     const { toast } = useToast();
+  const { currentUser } = useAuth();
+  
+  const { data: user_noti_preferences } = useGetUserNotiPreferences(
+    currentUser.id
+  );
 
+  const { toast } = useToast(); 
 
-    const submitHandler = async() => {
-       await updateNotificationPreferences({options: options, currentUserId: currentUser.id, toast: toast});
+  useEffect(() => {
+    if (user_noti_preferences) {
+      setOptions({
+        noti_nextDay: user_noti_preferences[0].notifications.noti_nextDay,
+        noti_upcoming: user_noti_preferences[0].notifications.noti_upcoming,
+      });
     }
+  }, [user_noti_preferences]);
+
+
+  const submitHandler = async () => {
+    await updateNotificationPreferences({
+      options: options,
+      currentUserId: currentUser.id,
+      toast: toast,
+    });
+  };
 
   return (
     <DashboardLayout>
