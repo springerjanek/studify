@@ -33,7 +33,7 @@ export const AssignmentsContainer = styled.div`
     width: 35%;
   }
   @media only screen and (min-width: 1600px) {
-    width: 23%;
+    width: 27%;
   }
 `;
 
