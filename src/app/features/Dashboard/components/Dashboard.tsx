@@ -1,5 +1,10 @@
+import { useEffect, useRef } from "react";
 import { useGetUserAssignments } from "../data-access/getUserAssignments.query";
 import { useGetUserSchedule } from "../data-access/getUserSchedule.query";
+import { useGetUserNotiPreferences } from "../data-access/getUserNotiPreferences.query";
+import { useNotify } from "../hooks/useNotify";
+import { useGetFormattedDate } from "../hooks/useGetFormattedDate";
+import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@shared/utils/auth";
 import { useCalendarModal } from "@/app/shared/utils/calendarModal";
 import Calendar from "react-calendar";
@@ -28,8 +33,33 @@ export const Dashboard = () => {
 
   const { currentUser } = useAuth();
 
-  const { data: user_assignments } = useGetUserAssignments(currentUser!.id);
-  const { data: user_schedule } = useGetUserSchedule(currentUser!.id);
+  const { data: user_assignments } = useGetUserAssignments(currentUser.id);
+  const { data: user_schedule } = useGetUserSchedule(currentUser.id);
+  const { data: noti_preferences } = useGetUserNotiPreferences(currentUser.id);
+
+  const { toast } = useToast();
+
+  const { notifyUpcoming, notifyNextDay } = useNotify({
+    user_assignments,
+    useGetFormattedDate,
+    toast,
+  });
+
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    if (isMounted.current) {
+      if (noti_preferences && noti_preferences[0].notifications.noti_nextDay) {
+        notifyNextDay();
+      }
+
+      if (noti_preferences && noti_preferences[0].notifications.noti_upcoming) {
+        notifyUpcoming();
+      }
+    } else {
+      isMounted.current = true;
+    }
+  }, [noti_preferences]);
 
   return (
     <DashboardLayout>

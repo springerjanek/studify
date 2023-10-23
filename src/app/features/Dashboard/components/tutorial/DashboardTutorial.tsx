@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useTutorialState } from "../../hooks/useTutorialState";
 import { useCalendarModal } from "@/app/shared/utils/calendarModal";
 import { useAuth } from "@/app/shared/utils/auth";
@@ -14,6 +15,9 @@ export const DashboardTutorial = () => {
   const { run, steps, stepIndex, tutorialState } = useTutorialState();
 
   const { currentUser } = useAuth();
+
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const {toast} = useToast()
 
@@ -35,6 +39,16 @@ export const DashboardTutorial = () => {
 
   const handleClickStart = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
+
+    if(location.pathname !== "/dashboard") {
+
+      navigate("/dashboard")
+      toast({
+        title: "You must be on the main dashboard page to start the tutorial!",
+        description: "Click on the tutorial button to start.",
+        className: "text-black",
+      });
+    }
 
     tutorialState((prev) => ({ ...prev, run: true }));
   };

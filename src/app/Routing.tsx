@@ -5,6 +5,8 @@ import { Home } from "./Home";
 import { SignIn } from "@features/Auth/containers/Login";
 import { Dashboard } from "@features/Dashboard";
 import { Notifications } from "@features/Dashboard/components/notifications/Notifications";
+import { Settings } from "./features/Dashboard/components/settings/Settings";
+import { Profile } from "./features/Dashboard/components/user/Profile";
 
 const PrivateRoute = ({ children }: { children: ReactNode }) => {
   const { session } = useAuth();
@@ -32,6 +34,22 @@ export const Routing = () => {
           element={
             <PrivateRoute>
               <Notifications />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/settings"
+          element={
+            <PrivateRoute>
+              <Settings />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
             </PrivateRoute>
           }
         />
