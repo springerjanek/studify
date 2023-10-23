@@ -28,7 +28,7 @@ export const DashboardNavbar = () => {
           <NotificationsActiveOutlinedIcon className="w-4 h-4" /> Notifications
         </StyledLink>
 
-        <StyledLink to="">
+        <StyledLink to="/dashboard/settings">
           <SettingsOutlinedIcon className="w-4 h-4" /> Settings
         </StyledLink>
 
