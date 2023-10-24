@@ -1,5 +1,5 @@
 import { UseFormRegisterReturn } from "react-hook-form";
-import { StyledInput } from "./Input.styled";
+import { StyledInput, SecondaryInput } from "./Input.styled";
 import { HTMLInputTypeAttribute } from "react";
 
 export const Input = ({
@@ -25,3 +25,22 @@ export const Input = ({
     ></StyledInput>
   );
 };
+
+export const WhiteInput = ({
+id,
+  register,
+  type,
+  placeholder,
+}: {  id: string;
+  register: UseFormRegisterReturn<string>;
+  type: HTMLInputTypeAttribute;
+  placeholder?: string}) => {
+    return (
+      <SecondaryInput
+        id={id}
+        type={type}
+        placeholder={placeholder}
+        {...register}
+      ></SecondaryInput>
+    );
+}

@@ -16,3 +16,16 @@ export const StyledInput = styled.input<{ $width: string | undefined }>`
     outline: 0;
   }
 `;
+
+export const SecondaryInput = styled.input`
+  padding: 6px;
+  width: 66%;
+  border-radius: 5px;
+
+  @media only screen and (min-width: 300px) {
+    width: 90%;
+  }
+  @media only screen and (min-width: 768px) {
+    width: 75%;
+  }
+`;
