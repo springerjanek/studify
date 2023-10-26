@@ -27,20 +27,28 @@ export const Input = ({
 };
 
 export const WhiteInput = ({
-id,
+  id,
   register,
   type,
   placeholder,
-}: {  id: string;
-  register: UseFormRegisterReturn<string>;
+  value,
+  onChange,
+}: {
+  id: string;
+  register?: UseFormRegisterReturn<string>;
   type: HTMLInputTypeAttribute;
-  placeholder?: string}) => {
-    return (
-      <SecondaryInput
-        id={id}
-        type={type}
-        placeholder={placeholder}
-        {...register}
-      ></SecondaryInput>
-    );
-}
+  placeholder?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) => {
+  return (
+    <SecondaryInput
+      value={value}
+      onChange={onChange}
+      id={id}
+      type={type}
+      placeholder={placeholder}
+      {...register}
+    ></SecondaryInput>
+  );
+};
