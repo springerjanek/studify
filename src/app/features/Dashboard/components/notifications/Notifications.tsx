@@ -23,14 +23,13 @@ export const Notifications = () => {
   });
 
   const { currentUser } = useAuth();
-    const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-  
   const { data: user_noti_preferences } = useGetUserNotiPreferences(
     currentUser.id
   );
 
-  const { toast } = useToast(); 
+  const { toast } = useToast();
 
   useEffect(() => {
     if (user_noti_preferences) {
@@ -41,13 +40,12 @@ export const Notifications = () => {
     }
   }, [user_noti_preferences]);
 
-
   const submitHandler = async () => {
     await updateNotificationPreferences({
       options: options,
       currentUserId: currentUser.id,
       toast: toast,
-      queryClient: queryClient
+      queryClient: queryClient,
     });
   };
 
