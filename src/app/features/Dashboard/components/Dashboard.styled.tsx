@@ -29,6 +29,21 @@ export const Container = styled.main`
 
 `;
 
+export const UserNavContainer = styled.div`
+  padding: 16px;
+
+  @media only screen and (min-width: 300px) {
+    order: -1;
+    width: fit-content;
+    align-self: flex-end;
+  }
+
+  @media only screen and (min-width: 769px) {
+    align-self: flex-start;
+   order: 1;
+  }
+`;
+
 export const TutorialHeading = styled.h2`
   display: flex;
   align-items: center;
