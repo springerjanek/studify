@@ -1,16 +1,16 @@
 import { useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/app/shared/utils/auth";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   AddAssignmentForm,
   AssignmentFormValues,
-} from "../../../forms/AddAssignmentForm";
-import { Heading } from "@shared/ui/Heading";
+} from "../../forms/AddAssignmentForm";
+import { handleFormSubmit } from "../../forms/formSubmitHandler";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { ModalContainer, HeadingContainer } from "./AddAssignment.styled";
-import { handleFormSubmit } from "./formSubmitHandler";
-import { useQueryClient } from "@tanstack/react-query";
-import { useToast } from "@/components/ui/use-toast";
-import { useAuth } from "@/app/shared/utils/auth";
+import { Heading } from "@shared/ui/Heading";
 
 export const AddAssignmentModal = ({
   showModal,
