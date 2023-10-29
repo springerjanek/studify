@@ -1,9 +1,11 @@
 import { supabase } from "@/app/supabase";
+import { QueryClient } from "@tanstack/react-query";
 
 export const updateNotificationPreferences = async ({
   options,
   currentUserId,
   toast,
+  queryClient,
 }: {
   options: {
     noti_upcoming: boolean;
@@ -11,6 +13,7 @@ export const updateNotificationPreferences = async ({
   };
   currentUserId: string;
   toast: any;
+  queryClient: QueryClient;
 }) => {
   const { noti_upcoming, noti_nextDay } = options;
 
@@ -39,6 +42,8 @@ export const updateNotificationPreferences = async ({
     });
     return;
   }
+
+  queryClient.invalidateQueries({ queryKey: ["user_noti_pref"] });
 
   toast({
     title: "Success!",
