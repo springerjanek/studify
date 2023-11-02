@@ -25,7 +25,7 @@ export const DayTimeline = ({
   const { mutate: updateUserSchedule } = useUpdateUserSchedule();
 
   const debouncedUpdate = useDebounce(() => {
-    updateUserSchedule({ user_schedule, userId, assignments });
+    updateUserSchedule({ user_schedule, userId, userAssignments });
   });
 
   const onDropHandler = (result: any) => {
@@ -61,7 +61,7 @@ export const DayTimeline = ({
 
   return (
     <DragDropContext onDragEnd={(result) => onDropHandler(result)}>
-      <TimeFrames assignments={assignments} currentDayDate={currentDayDate} />
+      <TimeFrames assignments={userAssignments} currentDayDate={currentDayDate} />
     </DragDropContext>
   );
 };

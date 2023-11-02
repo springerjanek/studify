@@ -8,20 +8,20 @@ export const useUpdateUserSchedule = () => {
   return useMutation({
     mutationFn: async ({
       userId,
-      assignments,
+      userAssignments,
       user_schedule,
     }: {
       userId: string;
-      assignments: {
+      userAssignments: {
             name: string;
             dates: string[];
           }[] | undefined;
       user_schedule: UserSchedule[] | undefined;
     }) => {
-      if (user_schedule && assignments) {
+      if (user_schedule && userAssignments) {
         const updatedAssignments = user_schedule[0].data.assignments.map(
           (userAssignment) => {
-            const matchingAssignment = assignments.find(
+            const matchingAssignment = userAssignments.find(
               (assignment) => assignment.name === userAssignment.name
             );
 
