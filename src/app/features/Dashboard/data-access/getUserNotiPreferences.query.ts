@@ -12,6 +12,7 @@ export const useGetUserNotiPreferences = (userId: string) => {
   const { isLoading, data } = useQuery({
     queryKey: ["user_noti_pref"],
     refetchOnWindowFocus: false,
+    staleTime: Infinity,
     queryFn: async () => {
       const { data: notiPreferences, error } = await supabase
         .from("users")

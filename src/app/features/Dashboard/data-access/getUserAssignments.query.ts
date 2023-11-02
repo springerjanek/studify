@@ -6,6 +6,7 @@ export const useGetUserAssignments = (userId: string) => {
   const { isLoading, data } = useQuery({
     queryKey: ["user_assignments"],
     refetchOnWindowFocus: false,
+    staleTime: Infinity,
     queryFn: async () => {
       const { data: user_assignments, error } = await supabase
         .from("assignments")
