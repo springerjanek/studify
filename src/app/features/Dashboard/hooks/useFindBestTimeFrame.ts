@@ -2,20 +2,30 @@ import { timeFramesData } from "../components/calendar/timeFramesData";
 
 export const useFindBestTimeFrame = (date: string) => {
   const convertTimeToMinutes = (time: string) => {
-    const [hours, minutes] = time.split(":").map(Number);
-    if (time.length === 1) {
+    const isPM = time.includes("PM");
+    const [hours] = isPM
+      ? time.split("PM").map(Number)
+      : time.split("AM").map(Number);
+    const minutes = time.length > 4 ? Number(time.split(":")[1]) : 0;
+
+    let totalMinutes = hours * 60 + minutes;
+
+    if (isPM && hours !== 12) {
+      totalMinutes += 12 * 60;
+    }
+
+    if (time.length === 1 && !isPM) {
       return hours * 60;
     }
 
-    return hours * 60 + minutes;
+    return totalMinutes;
   };
 
   const findBestTimeFrame = (date: string) => {
     const [, timeRange] = date.split(": ");
     const [startStr, endStr] = timeRange.split("-");
-
-    const startTime = convertTimeToMinutes(startStr.slice(0, -2));
-    const endTime = convertTimeToMinutes(endStr.slice(0, -2));
+    const startTime = convertTimeToMinutes(startStr);
+    const endTime = convertTimeToMinutes(endStr);
 
     let bestFrame = null;
     let minDiff = Infinity;
@@ -23,8 +33,8 @@ export const useFindBestTimeFrame = (date: string) => {
     for (const frame of timeFramesData) {
       const [frameStartStr, frameEndStr] = frame.split("-");
 
-      const frameStartTime = convertTimeToMinutes(frameStartStr.slice(0, -2));
-      const frameEndTime = convertTimeToMinutes(frameEndStr.slice(0, -2));
+      const frameStartTime = convertTimeToMinutes(frameStartStr);
+      const frameEndTime = convertTimeToMinutes(frameEndStr);
 
       const diffStart = Math.abs(startTime - frameStartTime);
       const diffEnd = Math.abs(endTime - frameEndTime);
@@ -40,5 +50,4 @@ export const useFindBestTimeFrame = (date: string) => {
 
   const bestFrame = findBestTimeFrame(date);
   return bestFrame;
-
 };
