@@ -11,9 +11,10 @@ import Calendar from "react-calendar";
 import { CalendarDayModal } from "./calendar/modals/calendarDay/CalendarDayModal";
 import { CalendarTile } from "./calendar/CalendarTile";
 import { AssignmentsList } from "./assignments/AssignmentsList";
-import { Container } from "./Dashboard.styled";
+import { Container, UserNavContainer } from "./Dashboard.styled";
 import { ModalContainer } from "./calendar/modals/calendarDay/calendarDay.styled";
 import { DashboardLayout } from "@/app/layouts/DashboardLayout";
+import { UserNav } from "./user/UserNav";
 
 type Assignment = {
   id: number;
@@ -91,6 +92,10 @@ export const Dashboard = () => {
           locale="en-EN"
         />
       </Container>
+      
+      <UserNavContainer>
+      <UserNav />
+      </UserNavContainer>
     </DashboardLayout>
   );
 };

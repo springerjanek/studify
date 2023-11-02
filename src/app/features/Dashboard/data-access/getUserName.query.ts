@@ -1,28 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "../../../supabase";
 
-export type NotiPreferences = {
-  notifications: {
-  noti_nextDay: boolean;
-  noti_upcoming: boolean;
-  }
+export type UserName = {
+  name:string
 }[];
 
-export const useGetUserNotiPreferences = (userId: string) => {
+export const useGetUserName = (userId: string) => {
   const { isLoading, data } = useQuery({
-    queryKey: ["user_noti_pref"],
+    queryKey: ["user_name"],
     refetchOnWindowFocus: false,
     staleTime: Infinity,
     queryFn: async () => {
-      const { data: notiPreferences, error } = await supabase
+      const { data: userName, error } = await supabase
         .from("users")
-        .select("notifications")
+        .select("name")
         .eq("user_id", userId);
 
       if (error) {
         throw error;
       }
-      return notiPreferences as NotiPreferences;
+      return userName as UserName;
     },
   });
 

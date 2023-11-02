@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/app/shared/utils/auth";
 import { useToast } from "@/components/ui/use-toast";
+import { useGetUserNotiPreferences } from "../../data-access/getUserNotiPreferences.query";
+import { useQueryClient } from "@tanstack/react-query";
 import { updateNotificationPreferences } from "./notificationService";
 import { Switch } from "@/components/ui/switch";
 import { DashboardLayout } from "@/app/layouts/DashboardLayout";
@@ -13,7 +15,6 @@ import {
   WhiteLine,
 } from "./Notifications.styled";
 import "./utils.css";
-import { useGetUserNotiPreferences } from "../../data-access/getUserNotiPreferences.query";
 
 export const Notifications = () => {
   const [options, setOptions] = useState({
@@ -22,12 +23,13 @@ export const Notifications = () => {
   });
 
   const { currentUser } = useAuth();
-  
+  const queryClient = useQueryClient();
+
   const { data: user_noti_preferences } = useGetUserNotiPreferences(
     currentUser.id
   );
 
-  const { toast } = useToast(); 
+  const { toast } = useToast();
 
   useEffect(() => {
     if (user_noti_preferences) {
@@ -38,12 +40,12 @@ export const Notifications = () => {
     }
   }, [user_noti_preferences]);
 
-
   const submitHandler = async () => {
     await updateNotificationPreferences({
       options: options,
       currentUserId: currentUser.id,
       toast: toast,
+      queryClient: queryClient,
     });
   };
 

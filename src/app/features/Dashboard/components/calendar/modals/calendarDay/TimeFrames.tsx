@@ -35,12 +35,12 @@ export const TimeFrames = ({
         return (
           <TimeFrame key={index}>
             <p>{timeFrame}</p>
-            <Droppable droppableId={timeFrame}>
+            <Droppable droppableId={timeFrame} >
               {(provided) => (
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className="flex align-center justify-center text-center w-full p-1"
+                  className="flex align-center text-center w-full p-1"
                   style={{
                     border: "1px solid black",
                   }}

@@ -21,6 +21,7 @@ export const useGetUserSchedule = (userId: string) => {
   const { isLoading, data } = useQuery<UserScheduleResponse>({
     queryKey: ["user_schedule"],
     refetchOnWindowFocus: false,
+    staleTime: Infinity,
     queryFn: async () => {
       const { data: user_schedule, error } = await supabase
         .from("schedules")

@@ -28,7 +28,7 @@ export const AddAssignmentForm = ({
   });
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit)} className="items-center">
       <Label htmlFor="assignment">
         <p>Assignment</p>
       </Label>

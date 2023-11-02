@@ -16,7 +16,7 @@ export const DraggableAssignment = ({
   return (
     <>
       {frameMatchingAssignments &&
-        frameMatchingAssignments.map((matchingAssignment) => {
+        frameMatchingAssignments.map((matchingAssignment, index) => {
           const matchingDate = matchingAssignment.dates.find((date) => {
             const [datePart] = date.split(": ");
             return datePart === currentDayDate;
@@ -28,7 +28,7 @@ export const DraggableAssignment = ({
             <Draggable
               key={matchingAssignment.name}
               draggableId={matchingAssignment.name || "empty"}
-              index={0}
+              index={index}
             >
               {(provided) => (
                 <DraggableWrapper

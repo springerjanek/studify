@@ -19,6 +19,7 @@ export const NavbarContainer = styled.nav`
     a {
       display: none;
     }
+    position: absolute;
     padding: 0;
   }
   @media only screen and (min-width: 769px) {
@@ -27,8 +28,10 @@ export const NavbarContainer = styled.nav`
       align-items: center;
       gap: 7px;
     }
+    position: relative;
     padding: 10px 25px;
   }
+  order: -2;
 `;
 
 export const HamburgerMenu = styled.div`
@@ -48,5 +51,5 @@ export const HamburgerMenu = styled.div`
     display: flex;
     align-items: center;
     gap: 7px;
-  }
+  } 
 `;

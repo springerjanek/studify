@@ -29,9 +29,9 @@ export const DashboardTutorial = () => {
          description: "Click on the tutorial button to resume it.",
          className: "text-black",
        });
-    }
+      }
 
-    if (showCalendarDayModal) {
+    if (showCalendarDayModal && stepIndex !== 0) {
       tutorialState((prev) => ({ ...prev, run: true }));
     }
   }, [showCalendarDayModal]);
