@@ -41,7 +41,7 @@ export const Profile = () => {
         <Separator className="my-6" />
 
         <ContentWrapper>
-          <DragAndDrop />
+          <DragAndDrop currentUser={currentUser}/>
 
           <h3>Account</h3>
 
