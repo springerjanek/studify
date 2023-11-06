@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useAuth } from "@/app/shared/utils/auth";
+import { useGetUserName } from "../../data-access/getUserName.query";
+import { useGetUserAvatar } from "../../data-access/getUserAvatar.query";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,16 +13,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useGetUserName } from "../../data-access/getUserName.query";
-import { useAuth } from "@/app/shared/utils/auth";
 
 export const UserNav = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
 
-  const { data } = useGetUserName(currentUser.id);
+  const { data: userAvatar } = useGetUserAvatar(currentUser.id);
+  const { data: name } = useGetUserName(currentUser.id);
 
-  const userName = data ? data[0].name : "User";
+  const userAvatarUrl = userAvatar
+    ? `https://rwwldaqpuxdnztewxate.supabase.co/storage/v1/object/public/avatars/${userAvatar[0].avatar_url}`
+    : "https://static-00.iconduck.com/assets.00/profile-circle-icon-512x512-zxne30hp.png";
+  const userName = name ? name[0].name : "User";
 
   return (
     <DropdownMenu>
@@ -27,10 +32,9 @@ export const UserNav = () => {
         <Button variant="ghost" className="relative h-11 w-11 rounded-full">
           <Avatar className="h-9 w-9">
             <AvatarImage
-              src="https://static-00.iconduck.com/assets.00/profile-circle-icon-512x512-zxne30hp.png"
+              src={userAvatarUrl}
               alt="User Image"
             />
-            <AvatarFallback>SC</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
