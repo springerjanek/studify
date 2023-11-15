@@ -4,7 +4,7 @@ import {
   TimeFramesContainer,
   TimeFrame,
 } from "./calendarDay.styled";
-import {  Droppable } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
 import { DraggableAssignment } from "./DraggableAssignment";
 
 export const TimeFrames = ({
