@@ -8,9 +8,15 @@ const StyledLabel = styled.label`
 export const Label = ({
   children,
   htmlFor,
+  className,
 }: {
   children: ReactNode;
   htmlFor: string;
+  className?: string;
 }) => {
-  return <StyledLabel htmlFor={htmlFor}>{children}</StyledLabel>;
+  return (
+    <StyledLabel htmlFor={htmlFor} className={className}>
+      {children}
+    </StyledLabel>
+  );
 };
