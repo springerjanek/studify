@@ -1,5 +1,5 @@
 import { useGetUserSchedule } from "../../../../data-access/getUserSchedule.query";
-import { useGetFormattedDate } from "../../../../hooks/useGetFormattedDate";
+import { useGetFormattedDate } from "../../../../hooks/dates/useGetFormattedDate";
 import { DayTimeline } from "./DayTimeline";
 import { Heading } from "@shared/ui/Heading";
 import { HeadingContainer, ModalWrapper } from "./calendarDay.styled";
