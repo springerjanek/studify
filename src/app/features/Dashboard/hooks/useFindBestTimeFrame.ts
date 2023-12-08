@@ -3,12 +3,11 @@ import { timeFramesData } from "../components/calendar/timeFramesData";
 export const useFindBestTimeFrame = (date: string) => {
   const convertTimeToMinutes = (time: string) => {
     const isPM = time.includes("PM");
-    const [hours] = isPM
-      ? time.split("PM").map(Number)
-      : time.split("AM").map(Number);
-    const minutes = time.length > 4 ? Number(time.split(":")[1]) : 0;
+    const [hours, minutes] = isPM
+      ? time.split("PM")[0].split(":").map(Number)
+      : time.split("AM")[0].split(":").map(Number);
 
-    let totalMinutes = hours * 60 + minutes;
+    let totalMinutes = hours * 60 + (minutes || 0);
 
     if (isPM && hours !== 12) {
       totalMinutes += 12 * 60;
@@ -24,6 +23,7 @@ export const useFindBestTimeFrame = (date: string) => {
   const findBestTimeFrame = (date: string) => {
     const [, timeRange] = date.split(": ");
     const [startStr, endStr] = timeRange.split("-");
+
     const startTime = convertTimeToMinutes(startStr);
     const endTime = convertTimeToMinutes(endStr);
 
