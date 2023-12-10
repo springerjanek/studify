@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "../../../../hooks/useDebounce";
 import { useUpdateUserSchedule } from "../../../../data-access/mutations/updateUserSchedule.mutation";
 import { UserSchedule } from "../../../../data-access/getUserSchedule.query";
-import { DragDropContext} from "react-beautiful-dnd";
+import { DragDropContext } from "react-beautiful-dnd";
 import { TimeFrames } from "./TimeFrames";
 
 export const DayTimeline = ({
@@ -23,6 +23,10 @@ export const DayTimeline = ({
 }) => {
   const [userAssignments, setUserAssignments] = useState(assignments);
   const { mutate: updateUserSchedule } = useUpdateUserSchedule();
+
+  useEffect(() => {
+    setUserAssignments(assignments);
+  }, [assignments]);
 
   const debouncedUpdate = useDebounce(() => {
     updateUserSchedule({ user_schedule, userId, userAssignments });
@@ -61,7 +65,10 @@ export const DayTimeline = ({
 
   return (
     <DragDropContext onDragEnd={(result) => onDropHandler(result)}>
-      <TimeFrames assignments={userAssignments} currentDayDate={currentDayDate} />
+      <TimeFrames
+        assignments={userAssignments}
+        currentDayDate={currentDayDate}
+      />
     </DragDropContext>
   );
 };
