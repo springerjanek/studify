@@ -7,13 +7,13 @@ export const AssignmentCardService = ({ name }: { name: string }) => {
 
   const { currentUser } = useAuth();
 
-  const deleteAssignment = useDeleteUserAssignment();
-  const completeAssignment = useCompleteAssignment();
+  const {mutate: deleteAssignment} = useDeleteUserAssignment();
+  const {mutate: completeAssignment} = useCompleteAssignment();
 
   const { toast } = useToast();
 
   const handleCompletedAssignment = () => {
-    completeAssignment.mutate({
+    completeAssignment({
       userId: currentUser!.id,
       assignmentName: name,
     });
@@ -26,7 +26,7 @@ export const AssignmentCardService = ({ name }: { name: string }) => {
   };
 
   const handleDeleteAssignment = () => {
-    deleteAssignment.mutate({
+    deleteAssignment({
       userId: currentUser!.id,
       assignmentName: name,
     });

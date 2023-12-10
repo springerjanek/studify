@@ -1,5 +1,5 @@
-import { useGetDueAssignmentsDates } from "../../hooks/useGetDueAssignmentDates";
-import { useGetFormattedDate } from "../../hooks/useGetFormattedDate";
+import { useGetDueAssignmentsDates } from "../../hooks/dates/useGetDueAssignmentDates";
+import { useGetFormattedDate } from "../../hooks/dates/useGetFormattedDate";
 import { Assignments } from "../Dashboard";
 import { UserScheduleResponse } from "../../data-access/getUserSchedule.query";
 
