@@ -57,6 +57,8 @@ export const DraggableAssignment = ({
                   {editTimeRange && (
                     <TimePicker
                       timeFrame={matchingTimeFrame!}
+                      assignmentName={matchingAssignment.name}
+                      assignmentDate={matchingDate}
                       closeEdit={closeEdit}
                     />
                   )}
