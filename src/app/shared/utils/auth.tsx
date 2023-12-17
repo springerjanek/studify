@@ -10,28 +10,47 @@ import { Session } from "@supabase/gotrue-js/src/lib/types";
 
 const AuthContext = createContext<Session | null>(null);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [session, setSession] = useState<Session | null>(null);
+const fetchSession = async () => {
+  const { data } = await supabase.auth.getSession();
+  return data.session;
+};
+
+export const AuthProvider = ({
+  children,
+  mockedSession,
+}: {
+  children: ReactNode;
+  mockedSession?: Session | null;
+}) => {
+  const [sessionState, setSessionState] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setLoading(false);
-    });
+    const initializeSession = async () => {
+      if (mockedSession) {
+        setSessionState(mockedSession);
+        setLoading(false);
+      } else {
+        const session = await fetchSession();
+        setSessionState(session);
+        setLoading(false);
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      setLoading(false);
-    });
+        const {
+          data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+          setSessionState(session);
+          setLoading(false);
+        });
 
-    return () => subscription.unsubscribe();
-  }, []);
+        return () => subscription.unsubscribe();
+      }
+    };
+
+    initializeSession();
+  }, [mockedSession]);
 
   return (
-    <AuthContext.Provider value={session}>
+    <AuthContext.Provider value={sessionState}>
       {!loading && children}
     </AuthContext.Provider>
   );
@@ -41,9 +60,7 @@ export const useAuth = () => {
   const session = useContext(AuthContext);
 
   if (session === null) {
-    throw new Error(
-      "useAuth must be used within a AuthProvider"
-    );
+    throw new Error("useAuth must be used within a AuthProvider");
   }
 
   const currentUser = session.user;
