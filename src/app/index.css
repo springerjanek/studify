@@ -161,19 +161,42 @@ abbr[title] {
   color: white;
 }
 
- @media only screen and (max-width: 450px) {
-    .react-calendar {
-      width: 300px;
-    } 
+.react-timerange-picker {
+  display: flex;
+}
+
+@media only screen and (max-width: 470px) {
+  .react-timerange-picker__clock-button {
+    display: none;
   }
 
- @media only screen and (max-width: 350px) {
-    .react-calendar {
-      width: 270px;
-    } 
+  .react-timerange-picker__clear-button {
+    display: none;
   }
+}
 
-  @media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 440px) {
+  .react-timerange-picker__wrapper {
+    flex-direction: column;
+  }
+  .droppable {
+    width: 75%;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .react-calendar {
+    width: 300px;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .react-calendar {
+    width: 270px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
   ::-webkit-scrollbar {
     display: none;
   }
