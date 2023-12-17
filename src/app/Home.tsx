@@ -2,10 +2,10 @@ import Lottie from "lottie-react";
 import boyAnimation from "@assets/boy-studying.json";
 import girlAnimation from "@assets/girl-studying.json";
 import { DefaultLayout } from "./layouts";
-import { Container } from "./shared/ui/Container";
-import { Section } from "./shared/ui/Section";
-import { ImageContainer } from "./shared/ui/Section";
-import { AnimateIn } from "./features/Animate";
+import { Container } from "@shared/ui/Container";
+import { Section } from "@shared/ui/Section";
+import { ImageContainer } from "@shared/ui/Section";
+import { AnimateIn } from "@features/Animate";
 import { Heading } from "@shared/ui/Heading";
 
 export const Home = () => {
