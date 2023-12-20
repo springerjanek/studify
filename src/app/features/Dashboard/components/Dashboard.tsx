@@ -3,7 +3,7 @@ import { useGetUserAssignments } from "../data-access/getUserAssignments.query";
 import { useGetUserSchedule } from "../data-access/getUserSchedule.query";
 import { useGetUserNotiPreferences } from "../data-access/getUserNotiPreferences.query";
 import { useNotify } from "../hooks/useNotify";
-import { useGetFormattedDate } from "../hooks/useGetFormattedDate";
+import { useGetFormattedDate } from "../hooks/dates/useGetFormattedDate";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@shared/utils/auth";
 import { useCalendarModal } from "@/app/shared/utils/calendarModal";
