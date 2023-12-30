@@ -1,5 +1,6 @@
 import { RenderOptions, render, cleanup } from "@testing-library/react";
 import { afterEach, expect } from "vitest";
+import { server } from "./mocks/server";
 import * as matchers from "@testing-library/jest-dom/matchers";
 expect.extend(matchers);
 
@@ -9,6 +10,10 @@ import { CalendarModalProvider } from "./shared/utils/calendarModal";
 import { AuthProvider } from "./shared/utils/auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
+
+beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
+afterAll(() => server.close());
+afterEach(() => server.resetHandlers());
 
 afterEach(() => {
   cleanup();
