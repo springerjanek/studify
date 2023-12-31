@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from "@/app/shared/utils/auth";
 import { useQueryClient } from "@tanstack/react-query";
+import { useGetUserAssignments } from "@/app/features/Dashboard/data-access/getUserAssignments.query";
+import { useGetUserSchedule } from "@/app/features/Dashboard/data-access/getUserSchedule.query";
 import {
   AddAssignmentForm,
   AssignmentFormValues,
@@ -18,12 +20,15 @@ export const AddAssignmentModal = ({
   showModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [loading, setLoading] = useState(false);
-
-  const queryClient = useQueryClient();
-
+  
   const { toast } = useToast();
+  
+  const queryClient = useQueryClient()
 
   const { currentUser } = useAuth();
+  
+  const {data: user_assignments} = useGetUserAssignments(currentUser!.id)
+  const {data: user_schedule} = useGetUserSchedule(currentUser!.id)
 
   const onSubmit = async (data: AssignmentFormValues) => {
 
@@ -41,6 +46,8 @@ export const AddAssignmentModal = ({
       await handleFormSubmit({
         data,
         queryClient,
+        user_assignments,
+        user_schedule,
         toast,
         currentUser,
         setLoading,
